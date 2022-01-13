@@ -159,10 +159,20 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
                 // a `UriMatcher` or some custom logic.
 //                if (isCustomUri(uri)) {
                 String uriStr = ((UriAction) action).getUri();
-                if (uriStr != null && uriStr.contains("youtube.com")) {
-                    String videoId = uriStr.substring(uriStr.indexOf("=") + 1);
+                if (uriStr != null && uriStr.contains("youtube.com") || uriStr.contains("youtu.be") || uriStr.contains("youtube")  ) {
+                    String videoId = null;
+                    if(uriStr.contains("youtu.be"))
+                    {
+                        videoId = uriStr.substring(uriStr.indexOf("be/") + 3);
+                    }
+                    else {
+                        videoId = uriStr.substring(uriStr.indexOf("=") + 1);
+                    }
                     Bundle bundle = new Bundle();
                     bundle.putString("videoId", videoId);
+
+                    Log.e(TAG, "onPageClick: "+videoId );
+
                     utils.gotoNextActivity(MyPdfActivity.this, FullscreenDemoActivity.class, false, bundle);
                     handled = true;
 //                } else {
@@ -170,8 +180,12 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
 //                    intent.putExtra("LinkUrl",uriStr);
 //                    startActivity(intent);
 //                }
+                    Log.e(TAG, "onPageClick: "+uriStr );
+
 
                 } else {
+
+                    Log.e(TAG, "onPageClick: DEMO "+uriStr);
                     try {
                         Uri uri = Uri.parse(uriStr);
                         Intent intent = new Intent(MyPdfActivity.this, DemoActivity.class);

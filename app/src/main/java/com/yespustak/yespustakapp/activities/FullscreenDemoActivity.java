@@ -127,6 +127,8 @@ public class FullscreenDemoActivity extends YouTubeBaseActivity
 
         displayCurrentTime();
 
+        Log.e("TAG", "onInitializationSuccess: "+getIntent().getStringExtra("videoId") );
+
         // Start buffering
         if (!wasRestored) {
             player.loadVideo(getIntent().getStringExtra("videoId"));
