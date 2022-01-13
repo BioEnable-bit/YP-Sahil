@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <item
+        android:id="@+id/mi_create_note"
+        android:icon="@drawable/ic_notes_add_24"
+        android:title="@string/title_create_note" />
+
+    <item
+        android:id="@+id/mi_edit_note"
+        android:icon="@drawable/ic_notes_edit_24"
+        android:title="@string/title_edit_note" />
+
+    <item
+        android:id="@+id/mi_search_dictionary"
+        android:icon="@drawable/ic_notes_edit_24"
+        android:title="@string/text_search_in_dictionary" />
+
+    <item
+        android:id="@+id/mi_translate"
+        android:icon="@drawable/ic_notes_edit_24"
+        android:title="@string/title_translate" />
+
+    <item
+        android:id="@+id/mi_underline"
+        android:icon="@drawable/pspdf__ic_underline"
+        android:title="@string/title_underline" />
+
+    <item
+        android:id="@+id/mi_strikeout"
+        android:icon="@drawable/pspdf__ic_strikeout"
+        android:title="@string/title_strikeout" />
+
+    <item
+        android:id="@+id/mi_squiggle"
+        android:icon="@drawable/pspdf__ic_squiggly"
+        android:title="@string/title_squiggle" />
+</menu>

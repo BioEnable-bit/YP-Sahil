@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/shubham patil/.gradle/caches/transforms-3/6c4024ae71ca54b6b836cb8efbab856a/transformed/jetified-pspdfkit-7.0.0/res/layout/pspdf__you_tube_activity.xml" value="0.14947916666666666" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/drawable/ic_profile_selected.xml" value="0.14635416666666667" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/activity_fragment.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/activity_login_register.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/activity_on_boarding.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/activity_splash_screen.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/download_item.xml" value="0.2" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/fragment_academics.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/fragment_book_detail.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/fragment_home.xml" value="0.264" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/fragment_library.xml" value="0.4" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/fragment_login.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/fragment_personal_details.xml" value="0.264" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/item_app.xml" value="0.1947463768115942" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/item_book2.xml" value="0.2" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/item_vertical.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/my_pdf_activity.xml" value="0.2" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/my_view.xml" value="0.14266304347826086" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/layout/nav_header_main.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/shubham patil/AndroidStudioProjects/yes_pustak_app/app/src/main/res/menu/pdf_text_selection_menu.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/drawable-xxxhdpi/circle_border.xml" value="0.290625" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/drawable/btn_gradient_style.xml" value="0.4359375" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/drawable/ic_baseline_favorite_24.xml" value="0.4359375" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.4359375" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/drawable/ic_baseline_favorite_border_orange_24.xml" value="0.4359375" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/drawable/ic_baseline_favorite_orange_24.xml" value="0.4359375" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/drawable/rounded_thin_border.xml" value="0.3475" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/activity_fragment.xml" value="0.22109375" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/activity_main.xml" value="0.41171875" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/faq_item.xml" value="0.37" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_book_detail.xml" value="0.3825" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_cart.xml" value="0.41125" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_contact.xml" value="0.39125" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_edit_note.xml" value="0.4" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_favourite_books.xml" value="0.39125" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_help_and_support.xml" value="0.41171875" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_home.xml" value="0.41171875" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_library.xml" value="0.405" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_login.xml" value="0.41125" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_profile.xml" value="0.38" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_request_a_book.xml" value="0.39625" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_settings.xml" value="0.3975" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/fragment_tnc.xml" value="0.41171875" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/item_app.xml" value="0.72" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/item_app2.xml" value="1.6" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/layout/view_like_button.xml" value="0.41171875" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/menu/activity_main_drawer.xml" value="0.41171875" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/menu/main_activity_menu.xml" value="0.41171875" />
+        <entry key="..\:/Users/visha/AndroidStudioProjects/yp_app_win/app/src/main/res/menu/pdf_text_selection_menu.xml" value="0.37" />
+        <entry key="..\:/YP/app/src/main/res/drawable/ic_baseline_fullscreen_24.xml" value="0.216796875" />
+        <entry key="..\:/YP/app/src/main/res/drawable/pausebutton_24.xml" value="0.20234375" />
+        <entry key="..\:/YP/app/src/main/res/drawable/play_button_24.xml" value="0.20234375" />
+        <entry key="..\:/YP/app/src/main/res/layout/activity_main.xml" value="0.2046875" />
+        <entry key="..\:/YP/app/src/main/res/layout/fullscreen_demo.xml" value="0.18" />
+        <entry key="..\:/YP/app/src/main/res/layout/youtube.xml" value="0.1842948717948718" />
+        <entry key="..\:/YP/app/src/main/res/menu/main_activity_menu.xml" value="0.2046875" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/activity_splash_screen.xml" value="0.12771739130434784" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/faq_item.xml" value="0.19140625" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/faq_item_teacher.xml" value="0.19140625" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_assignment.xml" value="0.19140625" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_edit_profile.xml" value="0.1" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_exam_time_table.xml" value="0.19140625" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_faq.xml" value="0.19140625" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_library.xml" value="0.12771739130434784" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_login.xml" value="0.22" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_notes.xml" value="0.1" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_notice.xml" value="0.1" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_noties.xml" value="0.19140625" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_personal_details.xml" value="0.1" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_profile.xml" value="0.12771739130434784" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_request_a_book.xml" value="0.16826923076923078" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_teachers.xml" value="0.19140625" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/fragment_tnc.xml" value="0.17275641025641025" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/item_book3.xml" value="0.33" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/my_pdf_activity.xml" value="0.17275641025641025" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/nav_header_main.xml" value="0.1" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/note_item5.xml" value="0.25" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/layout/teacher_item.xml" value="0.33" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/menu/activity_main_drawer.xml" value="0.20416666666666666" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/menu/display_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/menu/downloaded_book_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/menu/fav_book_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/menu/fragment_activity_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/menu/home_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/menu/main_activity_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/menu/notes_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Yes Pustak/yes_pustak_29-12/yes_pustak_app/app/src/main/res/menu/pdf_text_selection_menu.xml" value="0.20416666666666666" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

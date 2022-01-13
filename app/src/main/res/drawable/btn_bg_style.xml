@@ -1,0 +1,6 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/btn_gradient_style" android:state_enabled="true" />
+    <item android:drawable="@drawable/btn_gradient_style_disabled" android:state_enabled="false" />
+    <!-- default state-->
+    <item android:drawable="@drawable/btn_gradient_style" />
+</selector>

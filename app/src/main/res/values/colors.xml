@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+<!--    <color name="colorPrimary">#F6925C</color>-->
+<!--    <color name="colorAccent">@color/colorPrimary</color>-->
+<!--    <color name="colorPrimaryDark">#F37552</color>-->
+    <color name="colorWhite">#ffffff</color>
+
+<!--    <color name="colorPrimary">#FF5722</color>-->
+    <color name="colorPrimary">#F6925C</color>
+<!--    <color name="colorPrimaryDark">#E64A19</color>-->
+    <color name="colorPrimaryDark">#F37552</color>
+    <color name="colorPrimaryLight">#FFCCBC</color>
+    <color name="colorAccent">#CA9920</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="icons">#FFFFFF</color>
+    <color name="divider">#BDBDBD</color>
+
+
+    <!-- colors for button style -->
+    <color name="gradient_start_color">@color/colorPrimary</color>
+    <color name="gradient_end_color">@color/colorPrimaryDark</color>
+    <!-- colors for tab and screen text -->
+    <color name="tab_indicator_gray">#c0c0c0</color>
+    <color name="intro_title_color">#000000</color>
+    <color name="intro_description_color">#656565</color>
+
+    <color name="bg_payment_fail">#F44336</color>
+    <color name="bg_row_background">#fa315b</color>
+    <color name="bg_cart_badge">#00B401</color>
+    <color name="bg_cart_badge2">#EEFF00</color>
+    <color name="bg_cart_badge3">#FDF900</color>
+
+<!--    <color name="address">#2F7092</color>-->
+<!--    <color name="followers">#0D5D98</color>-->
+<!--    <color name="headings">#3797CF</color>-->
+    <color name="headings">@color/colorPrimaryDark</color>
+    <color name="solidCircle">#AAFFFFFF</color>
+    <color name="circleBorder">#50FFFFFF</color>
+    <color name="gradEnd">#67EFC8</color>
+    <color name="gradStart">#63C9FF</color>
+<!--    <color name="followersBg">#65DCE5</color>-->
+<!--    <color name="followingBg">#49BEFF</color>-->
+    <color name="grey">#E5E5E5</color>
+    <color name="darkGrey">#808080</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="bg_payment_success">#00B401</color>
+
+
+<!-- Card bg colors -->
+    <color name="dark_blue">#0E6AAF</color>
+    <color name="dark_orange">#CF6513</color>
+    <color name="dark_green">#5D9704</color>
+    <color name="dark_violet">#7B1FA2</color>
+    <color name="dark_amber">#5D4037</color>
+    <color name="deep_orange">#FF3D00</color>
+    <color name="red_50">#E63053</color>
+</resources>

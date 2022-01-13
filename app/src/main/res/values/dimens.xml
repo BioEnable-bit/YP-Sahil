@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="badge_count_textsize">16sp</dimen>
+    <dimen name="corner_radius">64dp</dimen>
+</resources>

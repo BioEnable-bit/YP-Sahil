@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".fragments.OtpFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_verifying_source"
+            android:text="@string/title_verifying"
+            android:textSize="22sp"
+            android:textColor="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_otp_wait_msg"
+            android:text="@string/msg_otp_wait_mobile"
+            android:layout_marginTop="16dp"
+            android:textSize="22sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.mukesh.OtpView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/v_otp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:inputType="number"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:cursorVisible="false"
+            app:OtpItemCount="6"
+            app:OtpLineColor="@android:color/darker_gray"
+            app:OtpViewType="line" />
+
+        <TextView
+            android:id="@+id/tv_otp_required"
+            android:text="@string/text_enter_otp"
+            android:visibility="gone"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="32dp"
+            android:textColor="@android:color/holo_red_light"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_verify"
+            android:text="@string/title_verify"
+            android:layout_margin="32dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_gradient_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_countdown"
+            android:text="@string/text_resend_otp_text"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btn_resend"
+            android:text="@string/title_resend_otp"
+            android:enabled="false"
+            android:layout_gravity="center"
+            android:textSize="18sp"
+            android:textColor="@android:color/holo_blue_dark"
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</FrameLayout>

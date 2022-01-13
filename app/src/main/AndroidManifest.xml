@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.yespustak.yespustakapp">
+
+
+    <!-- Required to read and write the expansion files on shared storage -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- Required to read IMEI -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Required to check network availability-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+
+    <application
+        android:name=".utils.App"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_logo"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@drawable/ic_logo"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
+        tools:replace="android:icon"
+        tools:targetApi="m">
+<!--        <activity-->
+<!--            android:name=".activities.YouTubeActivity"-->
+<!--            android:exported="true"-->
+<!--            android:screenOrientation="landscape" />-->
+        <activity
+            android:name=".activities.LoginRegisterActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".activities.FragmentActivity" />
+        <activity android:name=".activities.DisplayNote2" />
+        <activity android:name=".activities.OnBoarding" />
+        <activity android:name=".activities.SplashScreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".activities.MyPdfActivity"
+            android:theme="@style/MyApp.Theme"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".activities.FullscreenDemoActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="Fullscreen demo"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/MyApp.Theme" />
+
+        <activity
+            android:name=".DemoActivity">
+        </activity>
+
+        <!-- Need to create a file provider -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths" />
+        </provider>
+        <!-- <meta-data -->
+        <!-- android:name="pspdfkit_license_key" -->
+        <!-- android:value="havfRDnw8n2oBu51NI3yKOgIe9i_bektHfzP8lyhRmYMMzu6YrM6MViHR1jw4eKFRQyfd1eUOwe6c8zIJ1xx56vAzwrOhkdWJDcmqFEo-KzXj8Fv01jc5sp8GI5Sp8wc3jW4OepNa7SE8zYaM2uPRJplFFoCtj9N4mcoIWVnFDj9509KuB98kMdjJO6AocmcqpWXS3STz-GoSZ_lCTHxvW1oNphaHIxPl2zQ46AASl6q8SIF-QiXf_ZgXQDzPpQjU9OzKz57kO444IqE3ABBOOhHbJxpGi_KBhCs7Ix-kjOg2l2Xx6_NFXIG7nq1uhtafb9sSreKcYjigLJNr84P-6YrwgHkAbJS-w_3y1Awlf-aLqbtJwltZ7z8ib7lc96lslmzjIJyjC8soKUDaE-7_I1gYwhaVeiOKlBWvXUN3ymoL8frZN8zPutHxwBPgFHSPN0nlq-r4aTX81uNn5mmqg==" /> -->
+
+        <!-- Services -->
+        <service android:name=".services.SendPdfDataService" />
+        <service android:name=".services.DownloadService" />
+    </application>
+
+</manifest>

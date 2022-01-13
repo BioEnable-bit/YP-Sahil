@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="16dp"
+    tools:context=".fragments.EditProfileFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:drawableStart="@drawable/ic_baseline_person_24"
+                android:drawablePadding="4dp"
+                android:drawableTint="@android:color/darker_gray"
+                android:maxLength="60"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title_name_asterisk" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:background="@drawable/rounded_border"
+            android:layout_marginBottom="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <ImageView
+                android:src="@drawable/ic_gender"
+                app:tint="@android:color/black"
+                android:paddingTop="4dp"
+                android:paddingStart="2dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="fitCenter"
+                android:layout_width="37dp"
+                android:layout_height="37dp"/>
+
+            <Spinner
+                android:id="@+id/spnr_gender"
+                android:layout_gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:entries="@array/gender" />
+        </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:drawableStart="@drawable/ic_baseline_email_24"
+                android:drawablePadding="4dp"
+                android:drawableTint="@android:color/darker_gray"
+                android:maxLength="128"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title_email_asterisk" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- Use date picker -->
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_dob"
+                android:inputType="date"
+                android:cursorVisible="true"
+                android:clickable="true"
+                android:focusable="false"
+                android:drawableStart="@drawable/ic_baseline_calendar_today_24"
+                android:drawablePadding="4dp"
+                android:drawableTint="@android:color/darker_gray"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title_date_of_birth_asterisk" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_mobile_no"
+                android:drawableStart="@drawable/ic_baseline_smartphone_24"
+                android:drawablePadding="4dp"
+                android:drawableTint="@android:color/darker_gray"
+                android:maxLength="10"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title_mobile_number_asterisk" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_whatsapp_no"
+                android:drawableStart="@drawable/ic_whatsapp"
+                android:drawablePadding="5dp"
+                android:maxLength="10"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/title_whatsapp_number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/cb_same_as_mobile_no"
+                android:text="@string/text_same_as_mobile_number"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:background="@drawable/rounded_border"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spnr_section"
+                android:entries="@array/schools"
+                android:padding="12dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:background="@drawable/rounded_border"
+            android:layout_marginBottom="14dp"
+            android:layout_width="match_parent"
+            android:layout_height="48dp">
+
+            <ImageView
+                android:src="@drawable/ic_baseline_calendar_today_24"
+                app:tint="@android:color/darker_gray"
+                android:paddingTop="4dp"
+                android:paddingStart="2dp"
+                android:layout_gravity="center_vertical"
+                android:scaleType="fitCenter"
+                android:layout_width="35dp"
+                android:layout_height="35dp"/>
+
+            <Spinner
+                android:visibility="gone"
+                android:id="@+id/spnr_academic_year"
+                android:layout_gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:entries="@array/schools" />
+        </LinearLayout>
+
+<!--        <RelativeLayout-->
+<!--            android:background="@drawable/rounded_border"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--            <Spinner-->
+<!--                android:id="@+id/spnr_academic_year"-->
+<!--                android:entries="@array/schools"-->
+<!--                android:padding="12dp"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"/>-->
+<!--        </RelativeLayout>-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_roll_no"
+                android:maxLength="10"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/text_roll_no" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:visibility="gone"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_gr_no"
+                android:maxLength="10"
+                android:inputType="text|textCapCharacters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/text_gr_number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:text="@string/title_save"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/btn_gradient_style"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</FrameLayout>

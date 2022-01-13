@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.BookDetailFragment">
+
+    <RelativeLayout
+        android:id="@+id/rl_data"
+        android:visibility="visible"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:id="@+id/sv_book_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.synnapps.carouselview.CarouselView
+                        android:id="@+id/carouselViewBookDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="460dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        app:fillColor="@color/colorPrimaryDark"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:pageColor="#00000000"
+                        app:radius="3dp"
+                        app:slideInterval="3000"
+                        app:strokeColor="@color/colorPrimaryDark"
+                        app:strokeWidth="1dp" />
+
+                    <TextView
+                        android:id="@+id/tvBookName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        tools:text="TextView"
+                        android:textColor="#000000"
+                        android:textSize="24sp"
+                        app:layout_constraintStart_toStartOf="@+id/carouselViewBookDetails"
+                        app:layout_constraintTop_toBottomOf="@+id/carouselViewBookDetails" />
+
+
+                    <LinearLayout
+                        android:id="@+id/ll_pricing"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/tvISBN"
+                        app:layout_constraintStart_toStartOf="@+id/tvBookName"
+                        app:layout_constraintTop_toBottomOf="@id/tvBookName">
+
+                        <TextView
+                            android:textSize="20sp"
+                            android:fontFamily="sans-serif-light"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_mrp_colon" />
+
+                        <TextView
+                            android:id="@+id/tv_mrp"
+                            tools:text="₹ 100.00"
+                            android:layout_marginStart="8dp"
+                            android:textSize="20sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <ImageButton
+                        android:visibility="gone"
+                        android:id="@+id/ib_fav_book"
+                        style="?android:attr/actionOverflowButtonStyle"
+                        android:src="@drawable/ic_baseline_favorite_border_24"
+                        app:tint="@color/colorSecondaryText"
+                        android:scaleType="centerCrop"
+                        android:foregroundGravity="center"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:padding="4dp"
+                        android:layout_marginEnd="32dp"
+                        app:layout_constraintBottom_toBottomOf="@+id/ll_pricing"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvBookName"
+                        android:layout_width="48dp"
+                        android:layout_height="wrap_content"/>
+
+<!--                    <com.like.LikeButton-->
+<!--                        app:icon_type="heart"-->
+<!--                        app:icon_size="40dp"-->
+<!--                        android:id="@+id/star_button"-->
+<!--                        android:foregroundGravity="center"-->
+<!--                        app:like_drawable="@drawable/ic_baseline_favorite_orange_24"-->
+<!--                        app:unlike_drawable="@drawable/ic_baseline_favorite_border_gray_24"-->
+<!--                        app:layout_constraintBottom_toBottomOf="@+id/ll_pricing"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/tvBookName"-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"/>-->
+
+
+                    <com.yespustak.yespustakapp.utils.likeButton.LikeButtonView
+                        android:id="@+id/lbv_favourite"
+                        android:foregroundGravity="center"
+                        app:layout_constraintBottom_toBottomOf="@+id/ll_pricing"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvBookName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
+
+
+                    <TextView
+                        android:id="@+id/tvISBN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="TextView"
+                        android:layout_marginTop="8dp"
+                        android:padding="2dp"
+                        android:textSize="14sp"
+                        android:drawablePadding="4dp"
+                        app:drawableStartCompat="@drawable/ic_round"
+                        app:layout_constraintStart_toStartOf="@+id/tvBookName"
+                        app:layout_constraintTop_toBottomOf="@+id/ll_pricing"
+                        app:drawableTint="@android:color/holo_red_light" />
+
+                    <TextView
+                        android:id="@+id/tvAuthor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        tools:text="TextView"
+                        android:padding="2dp"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="@android:color/holo_orange_light"
+                        app:layout_constraintStart_toStartOf="@+id/tvISBN"
+                        app:layout_constraintTop_toBottomOf="@+id/tvISBN"
+                        app:drawableStartCompat="@drawable/ic_round" />
+
+                    <TextView
+                        android:id="@+id/tv_publication"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        tools:text="TextView"
+                        android:padding="2dp"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="@android:color/holo_green_dark"
+                        app:layout_constraintStart_toStartOf="@+id/tvAuthor"
+                        app:layout_constraintTop_toBottomOf="@+id/tvAuthor"
+                        app:drawableStartCompat="@drawable/ic_round" />
+
+                    <TextView
+                        android:id="@+id/tvSubject"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        tools:text="TextView"
+                        android:padding="2dp"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="#BD0062"
+                        app:layout_constraintStart_toEndOf="@+id/tvAuthor"
+                        app:layout_constraintTop_toTopOf="@+id/tvAuthor"
+                        app:drawableStartCompat="@drawable/ic_round" />
+
+                    <TextView
+                        android:id="@+id/tvPagesCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        tools:text="TextView"
+                        android:padding="2dp"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="#E5B299"
+                        app:layout_constraintStart_toEndOf="@+id/tv_publication"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSubject"
+                        app:drawableStartCompat="@drawable/ic_round" />
+
+                    <TextView
+                        android:id="@+id/tvClass"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        tools:text="TextView"
+                        android:padding="2dp"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="@android:color/holo_blue_dark"
+                        app:layout_constraintStart_toStartOf="@+id/tv_publication"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_publication"
+                        app:drawableStartCompat="@drawable/ic_round" />
+
+                    <TextView
+                        android:id="@+id/tvBoard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center"
+                        tools:text="TextView"
+                        android:padding="2dp"
+                        android:drawablePadding="4dp"
+                        app:drawableTint="#8200E1"
+                        app:layout_constraintStart_toEndOf="@+id/tvClass"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPagesCount"
+                        app:drawableStartCompat="@drawable/ic_round" />
+
+    <!--                <com.borjabravo.readmoretextview.ReadMoreTextView-->
+    <!--                    android:id="@+id/tvDescription"-->
+    <!--                    android:text="Friday Afternoon Comprehension and Composition is a contemporary course designed to develop the learner’s comprehension and composition skills. Based on user feedback, the revised series, comprising Books 1 to 8, includes a separate section on composition. The scope of the series has been enlarged to cater to students of Classes 1 and 2 as well."-->
+    <!--                    android:paddingStart="16dp"-->
+    <!--                    android:paddingEnd="16dp"-->
+    <!--                    android:paddingTop="8dp"-->
+    <!--                    android:paddingBottom="8dp"-->
+    <!--                    android:textSize="16sp"-->
+    <!--                    app:trimCollapsedText="@string/title_show_more"-->
+    <!--                    app:trimExpandedText="@string/title_show_less"-->
+    <!--                    app:trimLines="2"-->
+    <!--                    app:colorClickableText="@color/colorPrimary"-->
+    <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+    <!--                    app:layout_constraintStart_toStartOf="parent"-->
+    <!--                    app:layout_constraintTop_toBottomOf="@+id/tvClass"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"/>-->
+
+
+                    <it.mike5v.viewmoretextview.ViewMoreTextView
+                        android:id="@+id/tvDescription"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        app:ellipsizeText="View More"
+                        app:ellipsizeTextColor="@color/colorPrimary"
+                        app:duration="200"
+                        app:visibleLines="2"
+                        app:isExpanded="false"
+                        android:textSize="16sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvClass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                    <!-- Buttons YPP, add to cart -->
+                    <LinearLayout
+                        android:id="@+id/ll_buttons"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="1dp"
+                        android:orientation="horizontal"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvDescription">
+
+                        <Button
+                            android:id="@+id/btn_already_purchased"
+                            android:visibility="gone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/mybutton"
+                            android:text="@string/text_already_purchased"
+                            android:textColor="@color/colorWhite" />
+
+                        <Button
+                            android:id="@+id/btn_ypp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/mybutton"
+                            tools:text="YPP: 200"
+                            android:textColor="@color/colorWhite" />
+
+                        <Button
+                            android:id="@+id/btn_add_to_cart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/mybutton"
+                            android:text="@string/title_add_to_cart"
+                            android:textColor="@color/colorWhite" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- Recommendation -->
+                <RelativeLayout
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/recommend_title"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="350dp">
+
+                        <LinearLayout
+                            android:id="@+id/ll_progress_recommendation"
+                            android:visibility="visible"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:layout_centerInParent="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ProgressBar
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                            <TextView
+                                android:text="@string/text_loading_recommendations"
+                                android:textSize="22sp"
+                                android:layout_marginTop="16dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_recommendation_data"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_recommendation_error"
+                                android:visibility="gone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="@string/text_no_recommendation"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                                app:layout_constraintBottom_toBottomOf="@+id/recyclerView" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_recommendation"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginTop="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:orientation="horizontal"
+                                android:visibility="gone"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                                tools:listitem="@layout/item_book2" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <!-- Empty view -->
+        <LinearLayout
+            android:id="@+id/ll_error"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical"
+            android:layout_margin="8dp">
+
+
+            <ImageView
+                android:id="@+id/iv_state_img"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_baseline_cloud_off_24"
+                app:tint="@color/gradient_start_color"
+                android:layout_width="150dp"
+                android:layout_height="150dp"/>
+
+            <TextView
+                android:id="@+id/tv_state_title"
+                android:text="@string/text_no_network_available"
+                style="@style/TextAppearance.MaterialComponents.Headline4"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/tv_state_desc"
+                android:text="@string/msg_network_error"
+                style="@style/TextAppearance.MaterialComponents.Headline5"
+                android:layout_marginTop="32dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/btn_retry"
+                android:text="@string/retry"
+                android:layout_marginTop="48dp"
+                android:layout_marginBottom="64dp"
+                android:paddingStart="48dp"
+                android:paddingEnd="48dp"
+                android:textColor="@color/colorWhite"
+                android:layout_gravity="center"
+                android:background="@drawable/btn_gradient_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <!-- Progress bar -->
+    <LinearLayout
+        android:id="@+id/ll_progress"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ProgressBar
+            android:layout_gravity="center"
+            android:layout_width="64dp"
+            android:layout_height="64dp" />
+
+        <TextView
+            android:text="@string/text_please_wait_dots"
+            android:textSize="22sp"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

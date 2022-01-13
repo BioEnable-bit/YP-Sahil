@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.DisplayNote2">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_notes"
+        tools:listitem="@layout/note_item5"
+        tools:itemCount="15"
+        android:clipToPadding="false"
+        android:padding="12dp"
+        android:background="@android:color/transparent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <LinearLayout
+        android:id="@+id/ll_empty"
+        android:visibility="gone"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_notes"
+            android:src="@drawable/ic_baseline_notes_24"
+            app:tint="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"/>
+
+        <TextView
+            android:id="@+id/tv_state_title"
+            android:text="@string/text_no_exam_time_table_found"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-light"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+<!--        <TextView-->
+<!--            android:id="@+id/tv_state_desc"-->
+<!--            android:text="@string/msg_empty_notes"-->
+<!--            style="@style/TextAppearance.MaterialComponents.Headline5"-->
+<!--            android:textColor="@color/colorSecondaryText"-->
+<!--            android:layout_marginTop="32dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"/>-->
+
+    </LinearLayout>
+
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab_add_note"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_margin="@dimen/fab_margin"-->
+<!--        android:tint="@color/white"-->
+<!--        app:srcCompat="@drawable/ic_baseline_create_24" />-->
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

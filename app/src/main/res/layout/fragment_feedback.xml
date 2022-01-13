@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.OffersFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+<!--        <TextView-->
+<!--            android:id="@+id/textView5"-->
+<!--            android:visibility="visible"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginBottom="16dp"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Do you have a suggestion or found some bug ? \n let us know in the form below"-->
+<!--            android:textSize="24sp" />-->
+
+        <TextView
+            android:id="@+id/textView5"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:gravity="center"
+            android:text="We would like to hear your thoughts, suggestion, concerns or problems with anything so we can improve!"
+            android:textSize="24sp" />
+
+
+        <TextView
+            android:text="@string/text_how_was_your_experience"
+            style="@style/TextAppearance.MaterialComponents.Headline4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.hsalf.smileyrating.SmileyRating
+            android:id="@+id/smile_rating"
+            android:layout_marginTop="12dp"
+            android:layout_width="600dp"
+            android:layout_height="wrap_content" />
+
+        <RadioGroup
+            android:id="@+id/rg_feedback_type"
+            android:orientation="horizontal"
+            android:checkedButton="@id/rb_email"
+            android:layout_marginTop="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:id="@+id/rb_bug"
+                android:text="@string/title_bug"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/rb_suggestion"
+                android:text="@string/title_suggestion"
+                android:layout_marginStart="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/rb_other"
+                android:text="@string/title_other"
+                android:checked="true"
+                android:layout_marginStart="56dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </RadioGroup>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textInputLayout2"
+            android:background="@drawable/rounded_border"
+            android:paddingTop="8dp"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:layout_marginTop="16dp"
+            android:paddingBottom="12dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_message"
+                tools:text="@tools:sample/lorem/random"
+                android:hint="@string/title_message"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:background="@null"
+                android:gravity="top"
+                android:minLines="5"
+                android:maxLength="512"
+                android:layout_width="match_parent"
+                android:layout_height="250dp" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <TextView-->
+<!--            android:text="Preferred method of communication"-->
+<!--            android:textSize="24sp"-->
+<!--            android:layout_marginTop="32dp"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+
+
+        <Button
+            android:id="@+id/btn_submit"
+            android:text="@string/title_submit"
+            android:paddingStart="48dp"
+            android:paddingEnd="48dp"
+            android:layout_marginTop="56dp"
+            android:layout_marginBottom="32dp"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_gradient_style"
+            android:textColor="@color/colorWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+
+</ScrollView>
