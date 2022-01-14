@@ -23,8 +23,8 @@ android {
         applicationId "com.yespustak.yespustakapp"
         minSdkVersion 23
         targetSdkVersion 30
-        versionCode 16
-        versionName "1.11.4 Dev"
+        versionCode 17
+        versionName "1.11.5 Dev"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 

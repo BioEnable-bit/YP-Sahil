@@ -21,7 +21,9 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
@@ -39,10 +41,13 @@ import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
 import com.google.ar.core.Config;
 import com.yespustak.yespustakapp.Constants;
+import com.yespustak.yespustakapp.DemoActivity;
 import com.yespustak.yespustakapp.R;
 import com.yespustak.yespustakapp.utils.utils;
 
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -61,8 +66,10 @@ public class FullscreenDemoActivity extends YouTubeBaseActivity
     private Handler mHandler = null;
     private SeekBar mSeekBar;
     private ImageButton play_pause;
-    private LinearLayout play_control;
+    private LinearLayout play_control,layout;
     private boolean status = false;
+    private boolean status2 = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,35 +78,25 @@ public class FullscreenDemoActivity extends YouTubeBaseActivity
         setContentView(R.layout.fullscreen_demo);
         // Initializing YouTube player view
         YouTubePlayerView youTubePlayerView = (YouTubePlayerView) findViewById(R.id.player);
+        youTubePlayerView.setOnClickListener(this);
         youTubePlayerView.initialize(Constants.YOUTUBE_DEVELOPER_KEY, this);
 
         //Add play button to explicitly play video in YouTubePlayerView
         mPlayButtonLayout = findViewById(R.id.video_control);
+        layout = findViewById(R.id.layout);
         play_pause = findViewById(R.id.play_video);
         play_control = findViewById(R.id.video_control);
         play_pause.setOnClickListener(this);
+        layout.setOnClickListener(this);
 
-      //  findViewById(R.id.full_screen).setOnClickListener(this);
+        findViewById(R.id.full_screen).setOnClickListener(this);
 
         Log.e("TAG", "onCreate: "+status );
-
-
-
-
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                play_control.setVisibility(View.GONE);
-//            }
-//        },3000);
-
-
 
 
         mPlayTimeTextView = (TextView) findViewById(R.id.play_time);
         mSeekBar = (SeekBar) findViewById(R.id.video_seekbar);
         mSeekBar.setOnSeekBarChangeListener(mVideoSeekBarChangeListener);
-
         mHandler = new Handler();
 
 
@@ -135,12 +132,51 @@ public class FullscreenDemoActivity extends YouTubeBaseActivity
         }
 
         player.setPlayerStyle(YouTubePlayer.PlayerStyle.CHROMELESS);
-        mPlayButtonLayout.setVisibility(View.VISIBLE);
+       // mPlayButtonLayout.setVisibility(View.VISIBLE);
 
         // Add listeners to YouTubePlayer instance
-        player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CUSTOM_LAYOUT);
+        player.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_CONTROL_SYSTEM_UI);
         player.setPlayerStateChangeListener(mPlayerStateChangeListener);
         player.setPlaybackEventListener(mPlaybackEventListener);
+
+
+        player.setPlayerStateChangeListener(new YouTubePlayer.PlayerStateChangeListener() {
+            @Override
+            public void onLoading() {
+
+            }
+
+            @Override
+            public void onLoaded(String s) {
+
+            }
+
+            @Override
+            public void onAdStarted() {
+
+            }
+
+            @Override
+            public void onVideoStarted() {
+
+            }
+
+            @Override
+            public void onVideoEnded() {
+                player.seekToMillis(0);
+                player.play();
+                //play_pause.setImageResource(R.drawable.play_button_24);
+               // mPlayTimeTextView.setText(mPlayer.getCurrentTimeMillis());
+
+
+
+            }
+
+            @Override
+            public void onError(YouTubePlayer.ErrorReason errorReason) {
+
+            }
+        });
     }
 
     YouTubePlayer.PlaybackEventListener mPlaybackEventListener = new YouTubePlayer.PlaybackEventListener() {
@@ -151,12 +187,16 @@ public class FullscreenDemoActivity extends YouTubeBaseActivity
         @Override
         public void onPaused() {
             mHandler.removeCallbacks(runnable);
+            play_pause.setImageResource(R.drawable.play_button_24);
+
         }
 
         @Override
         public void onPlaying() {
             mHandler.postDelayed(runnable, 100);
             displayCurrentTime();
+            play_pause.setImageResource(R.drawable.pausebutton_24);
+
         }
 
         @Override
@@ -200,18 +240,24 @@ public class FullscreenDemoActivity extends YouTubeBaseActivity
     SeekBar.OnSeekBarChangeListener mVideoSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            long lengthPlayed = (mPlayer.getDurationMillis() * progress) / 100;
-            mPlayer.seekToMillis((int) lengthPlayed);
+//            long lengthPlayed = (mPlayer.getDurationMillis() * progress) / 100;
+//            //mPlayTimeTextView.setText(mPlayer.getCurrentTimeMillis());
+//            mPlayer.seekToMillis((int) lengthPlayed);
+
+            if(fromUser){
+                long lengthPlayed = (mPlayer.getDurationMillis() * progress) / 100;
+                mPlayer.seekToMillis((int) lengthPlayed);
+            }
         }
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
-
+            mSeekBar = seekBar;
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-
+            mSeekBar = seekBar;
         }
     };
 
@@ -227,10 +273,12 @@ public class FullscreenDemoActivity extends YouTubeBaseActivity
                     play_pause.setImageResource(R.drawable.play_button_24);
                 }
                 break;
-//            case R.id.full_screen:
-//                mPlayer.addFullscreenControlFlag(YouTubePlayer.FULLSCREEN_FLAG_ALWAYS_FULLSCREEN_IN_LANDSCAPE);
-//                Log.e("TAG", "full screen");
-//                break;
+            case R.id.full_screen:
+               play_control.setVisibility(View.GONE);
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                break;
+
+
 
         }
     }
@@ -254,7 +302,37 @@ public class FullscreenDemoActivity extends YouTubeBaseActivity
         @Override
         public void run() {
             displayCurrentTime();
-            mHandler.postDelayed(this, 100000);
+
+            int progress = mPlayer.getCurrentTimeMillis() * 100 / mPlayer.getDurationMillis();
+            mSeekBar.setProgress(progress);
+
+           // mPlayTimeTextView.setText(String.valueOf(progress));
+
+            mHandler.postDelayed(this, 100);
         }
     };
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.e("TAG", "onTouchEvent: " );
+        return super.onTouchEvent(event);
+
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if( ev.getAction() == MotionEvent.ACTION_UP){
+            play_control.setVisibility(View.VISIBLE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+       // play_control.setVisibility(View.VISIBLE);
+
+    }
 }

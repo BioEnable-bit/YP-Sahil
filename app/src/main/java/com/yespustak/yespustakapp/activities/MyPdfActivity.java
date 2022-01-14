@@ -173,8 +173,10 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
 
                     Log.e(TAG, "onPageClick: "+videoId );
 
+
                     utils.gotoNextActivity(MyPdfActivity.this, FullscreenDemoActivity.class, false, bundle);
                     handled = true;
+                   // timer.cancel();
 //                } else {
 //                    Intent intent = new Intent(MyPdfActivity.this, DemoActivity.class);
 //                    intent.putExtra("LinkUrl",uriStr);
