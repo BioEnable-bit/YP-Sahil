@@ -132,6 +132,52 @@
 
                     </androidx.cardview.widget.CardView>
 
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_games_thumb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:layout_toRightOf="@+id/cv_extras_thumb"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardCornerRadius="8dp"
+                        app:cardElevation="8dp"
+                        app:cardMaxElevation="@dimen/cardview_default_elevation">
+
+                        <LinearLayout
+
+
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_games_collapsed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="100dp"
+                                android:layout_margin="4dp"
+                                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                                app:spanCount="3"
+                                tools:itemCount="9"
+                                tools:listitem="@layout/item_app2" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginBottom="8dp"
+                                android:text="Games"
+                                android:textColor="@android:color/black"
+                                android:textSize="18sp" />
+
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
 
                 </RelativeLayout>
 
@@ -301,7 +347,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_expanded2"
+            android:id="@+id/ll_expanded3"
             android:visibility="gone"
             android:background="@color/white"
             android:padding="16dp"
@@ -332,6 +378,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_expanded2"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:padding="16dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!--        <TextView-->
+            <!--            android:text="Apps"-->
+            <!--            android:textSize="32sp"-->
+            <!--            android:textColor="@android:color/white"-->
+            <!--            android:layout_margin="16dp"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"/>-->
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_games_expanded"
+                android:clipToPadding="false"
+                android:paddingBottom="8dp"
+                android:background="@android:color/transparent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="4"
+                tools:itemCount="10"
+                tools:listitem="@layout/item_app"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
 
 
     </FrameLayout>

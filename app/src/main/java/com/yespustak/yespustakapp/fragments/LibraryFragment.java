@@ -45,12 +45,15 @@ import com.yespustak.yespustakapp.activities.MainActivity;
 import com.yespustak.yespustakapp.adapters.AppsAdapter;
 import com.yespustak.yespustakapp.adapters.DownloadAdapter;
 import com.yespustak.yespustakapp.adapters.ExtrasAppAdapter;
+import com.yespustak.yespustakapp.adapters.GamesAppAdapter;
 import com.yespustak.yespustakapp.api.Retrofit2Client;
 import com.yespustak.yespustakapp.api.response.GetThirdPartyApps;
 import com.yespustak.yespustakapp.api.response.GetThirdPartyExtrasApps;
+import com.yespustak.yespustakapp.api.response.GetThirdPartyGamesApps;
 import com.yespustak.yespustakapp.models.AppModel;
 import com.yespustak.yespustakapp.models.DownloadBook;
 import com.yespustak.yespustakapp.models.ExtrasAppModel;
+import com.yespustak.yespustakapp.models.GamesAppModel;
 import com.yespustak.yespustakapp.services.DownloadService;
 import com.yespustak.yespustakapp.utils.AdapterItemClickListener;
 import com.yespustak.yespustakapp.utils.FilesUtil;
@@ -71,9 +74,9 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
     String TAG = this.getClass().getSimpleName();
 
     SwipeRefreshLayout swipeRefreshLayout;
-    View llAppsData, expandedView,expandedView2, llErrorEmpty, llBooksData;
-    CardView cvAppsThumb, cvExtrasThumb;
-    RecyclerView rvAppsExpanded, rvAppsCollapsed, rvExtrasAppsExpanded,rvExtrasCollapsed, rvDownloads;
+    View llAppsData, expandedView,expandedView2,expandedView3, llErrorEmpty, llBooksData;
+    CardView cvAppsThumb, cvExtrasThumb, cvGamesThumb;
+    RecyclerView rvAppsExpanded, rvAppsCollapsed, rvExtrasAppsExpanded,rvExtrasCollapsed, rvGamesAppsExpanded,rvGamesCollapsed, rvDownloads;
     TextView tvAppsError, tvStateDesc;
     ProgressBar pbLoadingApps;
     Button btnStart, btnAdd, btnDelete, btnPurchased, btnBrowse;
@@ -83,11 +86,13 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
     AppsAdapter appsAdapterExpanded, appsAdapterCollapsed;
 
     ExtrasAppAdapter extraAppsAdapterExpanded, extraAppsAdapterCollapsed;
+    GamesAppAdapter gamesAppsAdapterExpanded, gamesAppsAdapterCollapsed;
 
     DownloadAdapter downloadAdapter;
 
     ArrayList<AppModel> appList, appListFiltered;
     ArrayList<ExtrasAppModel> extrasAppList, extrasAppListFiltered;
+    ArrayList<GamesAppModel> gamesAppList, gamesAppListFiltered;
     List<DownloadBook> downloadBooks, bookListFiltered;
 
     private SearchView searchView = null;
@@ -193,6 +198,7 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setupViews(view);
+        getGames(false);
         getExtras(false);
         getApps(false);
     }
@@ -205,10 +211,13 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
         llBooksData = view.findViewById(R.id.ll_books_data);
         cvAppsThumb = view.findViewById(R.id.cv_apps_thumb);
         cvExtrasThumb = view.findViewById(R.id.cv_extras_thumb);
+        cvGamesThumb = view.findViewById(R.id.cv_games_thumb);
         rvAppsExpanded = view.findViewById(R.id.rv_apps_expanded);
         rvExtrasAppsExpanded = view.findViewById(R.id.rv_extras_expanded);
+        rvGamesAppsExpanded = view.findViewById(R.id.rv_games_expanded);
         rvAppsCollapsed = view.findViewById(R.id.rv_apps_collapsed);
         rvExtrasCollapsed = view.findViewById(R.id.rv_extras_collapsed);
+        rvGamesCollapsed = view.findViewById(R.id.rv_games_collapsed);
         pbLoadingApps = view.findViewById(R.id.pb_loading_apps);
         tvAppsError = view.findViewById(R.id.tv_apps_error);
         tvStateDesc = view.findViewById(R.id.tv_state_desc);
@@ -221,14 +230,18 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
         // Load the high-resolution "zoomed-in" image.
         expandedView = view.findViewById(R.id.ll_expanded);
         expandedView2 = view.findViewById(R.id.ll_expanded2);
+        expandedView3 = view.findViewById(R.id.ll_expanded3);
         CardView cvAppsThumb = view.findViewById(R.id.cv_apps_thumb);
         CardView cvExtrasThumb = view.findViewById(R.id.cv_extras_thumb);
+        CardView cvGamesThumb = view.findViewById(R.id.cv_games_thumb);
 
         appList = new ArrayList<>();
         extrasAppList = new ArrayList<>();
+        gamesAppList = new ArrayList<>();
 
         appListFiltered = new ArrayList<>();
         extrasAppListFiltered = new ArrayList<>();
+        gamesAppListFiltered = new ArrayList<>();
 
         bookListFiltered = new ArrayList<>();
 
@@ -247,11 +260,20 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
         appsAdapterExpanded = new AppsAdapter(getContext(), appListFiltered, this, 0);
         rvAppsExpanded.setAdapter(appsAdapterExpanded);
 
+        //setup extras view
         rvExtrasAppsExpanded.setHasFixedSize(true);
         rvExtrasAppsExpanded.setLayoutManager(new GridLayoutManager(requireContext(), spanCount));
         rvExtrasAppsExpanded.addItemDecoration(new GridSpacingItemDecoration(spanCount, 30, true));
         extraAppsAdapterExpanded = new ExtrasAppAdapter(getContext(), extrasAppListFiltered, this, 0);
         rvExtrasAppsExpanded.setAdapter(extraAppsAdapterExpanded);
+
+        //setup games view
+        rvGamesAppsExpanded.setHasFixedSize(true);
+        rvGamesAppsExpanded.setLayoutManager(new GridLayoutManager(requireContext(), spanCount));
+        rvGamesAppsExpanded.addItemDecoration(new GridSpacingItemDecoration(spanCount, 30, true));
+        gamesAppsAdapterExpanded = new GamesAppAdapter(getContext(), gamesAppListFiltered, this, 0);
+        rvGamesAppsExpanded.setAdapter(gamesAppsAdapterExpanded);
+
 
 
         rvAppsCollapsed.setHasFixedSize(true);
@@ -260,13 +282,17 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
         rvAppsCollapsed.setAdapter(appsAdapterCollapsed);
         rvAppsCollapsed.suppressLayout(true);//IMP
 
-
-
         rvExtrasCollapsed.setHasFixedSize(true);
         rvExtrasCollapsed.setLayoutManager(new GridLayoutManager(requireContext(), spanCount));
         extraAppsAdapterCollapsed = new ExtrasAppAdapter(getContext(), extrasAppList, this, 1);
         rvExtrasCollapsed.setAdapter(extraAppsAdapterCollapsed);
         rvExtrasCollapsed.suppressLayout(true);//IMP
+
+        rvGamesCollapsed.setHasFixedSize(true);
+        rvGamesCollapsed.setLayoutManager(new GridLayoutManager(requireContext(), spanCount));
+        gamesAppsAdapterCollapsed = new GamesAppAdapter(getContext(), gamesAppList, this, 1);
+        rvGamesCollapsed.setAdapter(gamesAppsAdapterCollapsed);
+        rvGamesCollapsed.suppressLayout(true);//IMP
 
         // Hook up clicks on the thumbnail views.
 
@@ -280,6 +306,12 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
         cvExtrasThumb.setOnClickListener(view1 ->{
 
             zoomImageFromThumb2(view, cvExtrasThumb);
+
+        });
+
+        cvGamesThumb.setOnClickListener(view1 ->{
+
+            zoomImageFromThumb3(view, cvGamesThumb);
 
         });
 
@@ -316,6 +348,7 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
         swipeRefreshLayout.setOnRefreshListener(() -> {
             getApps(true);
             getExtras(true);
+            getGames(true);
             viewModel.syncBooks().observe(getViewLifecycleOwner(), isSyncing -> {
                 swipeRefreshLayout.setRefreshing(isSyncing);
             });
@@ -441,6 +474,44 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
         });
     }
 
+    private void getGames(boolean refresh) {
+        if (!refresh)
+            showProgress(true);
+        Call<GetThirdPartyGamesApps> call = Retrofit2Client.getInstance().getApiService().getThirdPartyGamesApps(utils.getIMEINumber());
+        call.enqueue(new Callback<GetThirdPartyGamesApps>() {
+            @Override
+            public void onResponse(Call<GetThirdPartyGamesApps> call, Response<GetThirdPartyGamesApps> response) {
+                showProgress(false);
+                gamesAppList.clear();
+
+                if (!response.isSuccessful()) {
+                    showAppsData(true);
+                    return;
+                }
+
+                if (response.body() != null) {
+                    for (GamesAppModel app : response.body().getThirdPartyAppsGames()) {
+                        app.setIcon(getIcon(app.getPackageName()));
+                        gamesAppList.add(app);
+
+                    }
+                }
+
+                gamesAppListFiltered.clear();
+                gamesAppListFiltered.addAll(gamesAppList);
+                gamesAppsAdapterExpanded.notifyDataSetChanged();
+                showAppsData(false);
+            }
+
+            @Override
+            public void onFailure(Call<GetThirdPartyGamesApps> call, Throwable t) {
+                showProgress(false);
+                showAppsData(true);
+            }
+        });
+    }
+
+
 
     private void showProgress(boolean show) {
         pbLoadingApps.setVisibility(show ? View.VISIBLE : View.GONE);
@@ -458,6 +529,7 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
 
         cvAppsThumb.setVisibility(show ? View.VISIBLE : View.GONE);
         cvExtrasThumb.setVisibility(show2 ? View.VISIBLE : View.GONE);
+        cvGamesThumb.setVisibility(show2 ? View.VISIBLE : View.GONE);
         tvAppsError.setVisibility(show ? View.GONE : View.VISIBLE);
         tvAppsError.setVisibility(show2 ? View.GONE : View.VISIBLE);
     }
@@ -498,8 +570,10 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
         }else if (expandedView2.getVisibility() == View.VISIBLE) {
             expandedView2.callOnClick();
             return true;
+        }else if (expandedView3.getVisibility() == View.VISIBLE) {
+            expandedView3.callOnClick();
+            return true;
         }
-
         return  false;
     }
 
@@ -854,5 +928,135 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
             currentAnimator = set1;
         });
     }
+
+    private void zoomImageFromThumb3(View rootView, final View thumbView) {
+        // If there's an animation in progress, cancel it
+        // immediately and proceed with this one.
+        if (currentAnimator != null) {
+            currentAnimator.cancel();
+        }
+
+        // Calculate the starting and ending bounds for the zoomed-in image.
+        // This step involves lots of math. Yay, math.
+        final Rect startBounds = new Rect();
+        final Rect finalBounds = new Rect();
+        final Point globalOffset = new Point();
+
+        // The start bounds are the global visible rectangle of the thumbnail,
+        // and the final bounds are the global visible rectangle of the container
+        // view. Also set the container view's offset as the origin for the
+        // bounds, since that's the origin for the positioning animation
+        // properties (X, Y).
+        thumbView.getGlobalVisibleRect(startBounds);
+        rootView.findViewById(R.id.container).getGlobalVisibleRect(finalBounds, globalOffset);
+        startBounds.offset(-globalOffset.x, -globalOffset.y);
+        finalBounds.offset(-globalOffset.x, -globalOffset.y);
+
+        // Adjust the start bounds to be the same aspect ratio as the final
+        // bounds using the "center crop" technique. This prevents undesirable
+        // stretching during the animation. Also calculate the start scaling
+        // factor (the end scaling factor is always 1.0).
+        float startScale;
+        if ((float) finalBounds.width() / finalBounds.height() > (float) startBounds.width() / startBounds.height()) {
+            // Extend start bounds horizontally
+            startScale = (float) startBounds.height() / finalBounds.height();
+            float startWidth = startScale * finalBounds.width();
+            float deltaWidth = (startWidth - startBounds.width()) / 2;
+            startBounds.left -= deltaWidth;
+            startBounds.right += deltaWidth;
+        } else {
+            // Extend start bounds vertically
+            startScale = (float) startBounds.width() / finalBounds.width();
+            float startHeight = startScale * finalBounds.height();
+            float deltaHeight = (startHeight - startBounds.height()) / 2;
+            startBounds.top -= deltaHeight;
+            startBounds.bottom += deltaHeight;
+        }
+
+        // Hide the thumbnail and show the zoomed-in view. When the animation
+        // begins, it will position the zoomed-in view in the place of the
+        // thumbnail.
+        thumbView.setAlpha(0f);
+        expandedView3.setVisibility(View.VISIBLE);
+
+        // Set the pivot point for SCALE_X and SCALE_Y transformations
+        // to the top-left corner of the zoomed-in view (the default
+        // is the center of the view).
+        expandedView3.setPivotX(0f);
+        expandedView3.setPivotY(0f);
+
+        // Construct and run the parallel animation of the four translation and
+        // scale properties (X, Y, SCALE_X, and SCALE_Y).
+        AnimatorSet set = new AnimatorSet();
+        set
+                .play(ObjectAnimator.ofFloat(expandedView3, View.X,
+                        startBounds.left, finalBounds.left))
+                .with(ObjectAnimator.ofFloat(expandedView3, View.Y,
+                        startBounds.top, finalBounds.top))
+                .with(ObjectAnimator.ofFloat(expandedView3, View.SCALE_X,
+                        startScale, 1f))
+                .with(ObjectAnimator.ofFloat(expandedView3,
+                        View.SCALE_Y, startScale, 1f));
+        set.setDuration(shortAnimationDuration);
+        set.setInterpolator(new DecelerateInterpolator());
+        set.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                currentAnimator = null;
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                currentAnimator = null;
+            }
+        });
+        set.start();
+        currentAnimator = set;
+
+        // Upon clicking the zoomed-in image, it should zoom back down
+        // to the original bounds and show the thumbnail instead of
+        // the expanded image.
+        final float startScaleFinal = startScale;
+        expandedView3.setOnClickListener(view -> {
+            if (currentAnimator != null) {
+                currentAnimator.cancel();
+            }
+
+            // Animate the four positioning/sizing properties in parallel,
+            // back to their original values.
+            AnimatorSet set1 = new AnimatorSet();
+            set1.play(ObjectAnimator
+                    .ofFloat(expandedView3, View.X, startBounds.left))
+                    .with(ObjectAnimator
+                            .ofFloat(expandedView3,
+                                    View.Y, startBounds.top))
+                    .with(ObjectAnimator
+                            .ofFloat(expandedView3,
+                                    View.SCALE_X, startScaleFinal))
+                    .with(ObjectAnimator
+                            .ofFloat(expandedView3,
+                                    View.SCALE_Y, startScaleFinal));
+            set1.setDuration(shortAnimationDuration);
+            set1.setInterpolator(new DecelerateInterpolator());
+            set1.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    thumbView.setAlpha(1f);
+                    expandedView3.setVisibility(View.GONE);
+                    currentAnimator = null;
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    thumbView.setAlpha(1f);
+                    expandedView3.setVisibility(View.GONE);
+                    currentAnimator = null;
+                }
+            });
+            set1.start();
+            currentAnimator = set1;
+        });
+    }
+
 
 }

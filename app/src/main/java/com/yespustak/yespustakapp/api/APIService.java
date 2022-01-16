@@ -18,6 +18,7 @@ import com.yespustak.yespustakapp.api.response.GetPurchasedBooks;
 import com.yespustak.yespustakapp.api.response.GetSections;
 import com.yespustak.yespustakapp.api.response.GetThirdPartyApps;
 import com.yespustak.yespustakapp.api.response.GetThirdPartyExtrasApps;
+import com.yespustak.yespustakapp.api.response.GetThirdPartyGamesApps;
 import com.yespustak.yespustakapp.api.response.GetUserPref;
 import com.yespustak.yespustakapp.api.response.GetUserProfile;
 import com.yespustak.yespustakapp.api.response.Login;
@@ -305,6 +306,12 @@ public interface APIService {
     @POST("api/get/extra/apps/")
     @FormUrlEncoded
     Call<GetThirdPartyExtrasApps> getThirdPartyExtrasApps(
+            @Field("device_id") String deviceId
+    );
+
+    @POST("api/get/extra/apps/")
+    @FormUrlEncoded
+    Call<GetThirdPartyGamesApps> getThirdPartyGamesApps(
             @Field("device_id") String deviceId
     );
 
