@@ -15,6 +15,9 @@ public class BookDetailModel {
     @SerializedName("heading")
     @Expose
     private String heading;
+    @SerializedName("ncrt_boook_flag")
+    @Expose
+    private Integer ncrt_boook_flag;
     @SerializedName("isbn")
     @Expose
     private String isbn;
@@ -80,6 +83,14 @@ public class BookDetailModel {
 
     public void setHeading(String heading) {
         this.heading = heading;
+    }
+
+    public Integer getNcrt_boook_flag() {
+        return ncrt_boook_flag;
+    }
+
+    public void setNcrt_boook_flag(Integer ncrt_boook_flag) {
+        this.ncrt_boook_flag = ncrt_boook_flag;
     }
 
     public String getIsbn() {

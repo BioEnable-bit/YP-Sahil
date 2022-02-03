@@ -669,6 +669,100 @@ public class utils {
 
     }
 
+    public static void openPdfActivity2(Activity activity, Uri fileUri, int bookId,String bookPassword,String note,int pageNo) {
+        // In this example, you want to enable all annotation tools except the `IMAGE` tool.
+        List<AnnotationTool> enabledAnnotationTools = new ArrayList<>();
+        enabledAnnotationTools.addAll(Arrays.asList(AnnotationTool.values()));
+        enabledAnnotationTools.remove(AnnotationTool.IMAGE);
+        enabledAnnotationTools.remove(AnnotationTool.SIGNATURE);
+        enabledAnnotationTools.remove(AnnotationTool.SQUARE);
+        enabledAnnotationTools.remove(AnnotationTool.NOTE);
+        enabledAnnotationTools.remove(AnnotationTool.STAMP);
+        enabledAnnotationTools.remove(AnnotationTool.CAMERA);
+        enabledAnnotationTools.remove(AnnotationTool.FREETEXT);
+        enabledAnnotationTools.remove(AnnotationTool.FREETEXT_CALLOUT);
+        enabledAnnotationTools.remove(AnnotationTool.ERASER);
+        PdfActivityConfiguration config;
+
+
+        Log.e(TAG, "openPdfActivity2: "+bookId);
+
+        if(pageNo==0)
+        {
+            config = new PdfActivityConfiguration.Builder(activity)
+                    .autosaveEnabled(true)
+                    .enableFormEditing()
+                    .setEnabledShareFeatures(ShareFeatures.none())
+                    .disablePrinting()
+                    .disableDocumentEditor()
+//                .textSelectionPopupToolbarEnabled(false)
+                    .enableAnnotationEditing()
+                    .enabledAnnotationTools(enabledAnnotationTools)
+                    .enableAnnotationRotation()
+                    .textSelectionPopupToolbarEnabled(false)
+                    .animateScrollOnEdgeTaps(true)
+//                .disableAnnotationEditing()
+//                .disableBookmarkList()
+//                .disableAnnotationList()
+                    .disableDocumentInfoView()
+                    .build();
+        }
+        else
+        {
+            config = new PdfActivityConfiguration.Builder(activity)
+                .autosaveEnabled(true)
+                .enableFormEditing()
+                .setEnabledShareFeatures(ShareFeatures.none())
+                .disablePrinting()
+                .disableDocumentEditor()
+//                .textSelectionPopupToolbarEnabled(false)
+                .enableAnnotationEditing()
+                .enabledAnnotationTools(enabledAnnotationTools)
+                .enableAnnotationRotation()
+                .textSelectionPopupToolbarEnabled(false)
+                .animateScrollOnEdgeTaps(true)
+//                .disableAnnotationEditing()
+//                .disableBookmarkList()
+//                .disableAnnotationList()
+                .page(pageNo)
+                .disableDocumentInfoView()
+                .build();
+        }
+
+
+
+
+        //Start using uri
+//        Uri fileUri = getAssetFileUri(filename);
+        if (bookPassword!=null && bookPassword!="" && bookPassword!="null" &&
+                !bookPassword.equalsIgnoreCase("") &&
+                !bookPassword.equalsIgnoreCase("null") &&
+                !bookPassword.equalsIgnoreCase(null)){
+            final Intent intent = PdfActivityIntentBuilder.fromUri(activity, fileUri)
+                    .configuration(config)
+                    .activityClass(MyPdfActivity.class)
+                    .passwords(bookPassword)
+                    .build();
+            intent.putExtra("book_id", bookId);
+            intent.putExtra("note",note);
+            activity.startActivity(intent);
+        } else {
+            final Intent intent = PdfActivityIntentBuilder.fromUri(activity, fileUri)
+                    .configuration(config)
+                    .activityClass(MyPdfActivity.class)
+                    .build();
+            intent.putExtra("book_id", bookId);
+            intent.putExtra("note",note);
+            activity.startActivity(intent);
+        }
+
+
+        //TODO replace this with original data
+//        intent.putExtra("student_id", 1);
+
+    }
+
+
 //    private Uri getAssetFileUri(String filename) {
 //        AssetManager am = getActivity().getAssets();
 //        File file = null;

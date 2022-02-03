@@ -69,6 +69,9 @@ public class BaseFragment extends Fragment {
         bookDetailModel.setTitle(bookModel.getTitle());
         ModelSharedPref.getInstance().saveModel(bookDetailModel);
 
+
+        Log.e(TAG, "openBookDetail: "+bookModel.getNcrt_boook_flag());
+
         //create intent
         Intent intent = new Intent(getContext(), FragmentActivity.class);
         intent.putExtra("fragment", "bookDetails");

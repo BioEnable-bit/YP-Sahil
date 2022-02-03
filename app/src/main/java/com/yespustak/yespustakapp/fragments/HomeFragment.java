@@ -449,6 +449,10 @@ public class HomeFragment extends BaseFragment implements AdapterItemClickListen
     private final SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
         @Override
         public boolean onQueryTextSubmit(String query) {
+
+
+
+
             getBookList(false);
             return true;
         }

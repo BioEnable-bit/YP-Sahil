@@ -26,6 +26,9 @@ public class NoteModel implements Serializable {
     @ColumnInfo(name = "book_id")
     private int bookId;
 
+    @ColumnInfo(name = "book_page_no")
+    private int book_page_no;
+
     @ColumnInfo(name = "created_at")
     private Date createdAt;
 
@@ -87,6 +90,14 @@ public class NoteModel implements Serializable {
 
     public void setPinned(boolean pinned) {
         isPinned = pinned;
+    }
+
+    public int getBook_page_no() {
+        return book_page_no;
+    }
+
+    public void setBook_page_no(int book_page_no) {
+        this.book_page_no = book_page_no;
     }
 
     public int getBookId() {

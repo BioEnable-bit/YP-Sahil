@@ -221,7 +221,7 @@
     <string name="text_na">NA</string>
     <string name="text_total_ypp_amount">Total YPP Amount:</string>
     <string name="text_no_recommendation">No recommendation</string>
-    <string name="text_search_title">Search Book by Title</string>
+    <string name="text_search_title">Search Book by Title or Publisher</string>
     <string name="text_no_network">No network available</string>
     <string name="text_no_books">No books found</string>
     <string name="msg_no_books">There is no book available for selected standard. \n Please try to search other books.</string>

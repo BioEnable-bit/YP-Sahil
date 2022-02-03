@@ -412,6 +412,7 @@ public class FragmentActivity extends AppCompatActivity implements PaymentResult
         savePaymentRequest.setDeviceId(deviceId);
 //        savePaymentRequest.setStatus("Success");
 
+
         Call<SavePaymentResponse> callPayment = Retrofit2Client.getInstance().getApiService().savePayment(savePaymentRequest);
 
         //enqueue request

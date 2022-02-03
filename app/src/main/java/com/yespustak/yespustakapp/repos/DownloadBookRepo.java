@@ -94,6 +94,10 @@ public class DownloadBookRepo {
                 if (!response.isSuccessful() || response.body().getPurchasedBooks() == null)
                     return;
 
+
+                Log.e(TAG, "onResponse: "+response.body().getPurchasedBooks());
+
+
                 List<DownloadBook> remoteDownloadBooks = response.body().getPurchasedBooks();
                 List<Integer> insertedList = new ArrayList<>();
                 HashMap<Integer, DownloadBook> booksMap = getBooksMap();

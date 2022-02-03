@@ -611,7 +611,7 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
                 return;
             }
             Log.i(TAG, "onClick: " + book.toString());
-            utils.openPdfActivity(requireActivity(), Uri.parse(book.getFileUri()), book.getRid(),book.getPassword());
+            utils.openPdfActivity2(requireActivity(), Uri.parse(book.getFileUri()), book.getRid(),book.getPassword(),"null",0);
         }
     }
 
@@ -646,7 +646,7 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
 //                viewModel.insert(new DownloadBook("Lorem ipsum", "Madhubun", "https://ars.els-cdn.com/content/image/1-s2.0-S0092867415012702-mmc6.pdf", "uploads/publishers/books/5/1623417110math_plus.jpg"));
 //                viewModel.insert(new DownloadBook("Lorem ipsum", "Madhubun", "https://download.support.xerox.com/pub/docs/FlowPort2/userdocs/any-os/en/fp_dc_setup_guide.pdf", "uploads/publishers/books/5/1623417110math_plus.jpg"));
 //                viewModel.insert(new DownloadBook("Xerox", "NCRT", "https://www.hq.nasa.gov/alsj/a17/A17_FlightPlan.pdf", "uploads/publishers/books/6/1623417535compacta.jpg"));
-                viewModel.insert(new DownloadBook("Xerox", "NCRT", "https://www.eurofound.europa.eu/sites/default/files/ef_publication/field_ef_document/ef1710en.pdf", "uploads/publishers/books/6/1623417535compacta.jpg"));
+              //  viewModel.insert(new DownloadBook("Xerox", "NCRT", "https://www.eurofound.europa.eu/sites/default/files/ef_publication/field_ef_document/ef1710en.pdf", "uploads/publishers/books/6/1623417535compacta.jpg"));
 
 //                viewModel.insert(new DownloadBook("The little price", "English", 100, 0, "", "https://freeditorial.com/en/books/the-little-prince/downloadbookepub/pdf"));
 //                viewModel.insert(new DownloadBook("The inferno", "English", 100, 0, "", "https://ia800300.us.archive.org/12/items/inferno00dant_2/inferno00dant_2.pdf"));

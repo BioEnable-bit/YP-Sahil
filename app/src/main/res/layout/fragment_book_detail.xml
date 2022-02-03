@@ -67,18 +67,10 @@
                         app:layout_constraintStart_toStartOf="@+id/tvBookName"
                         app:layout_constraintTop_toBottomOf="@id/tvBookName">
 
-                        <TextView
-                            android:textSize="20sp"
-                            android:fontFamily="sans-serif-light"
-                            android:textStyle="bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/text_mrp_colon" />
 
                         <TextView
                             android:id="@+id/tv_mrp"
                             tools:text="₹ 100.00"
-                            android:layout_marginStart="8dp"
                             android:textSize="20sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />

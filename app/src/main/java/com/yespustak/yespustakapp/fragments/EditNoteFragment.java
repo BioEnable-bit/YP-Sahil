@@ -2,16 +2,21 @@ package com.yespustak.yespustakapp.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +25,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.yespustak.yespustakapp.R;
+import com.yespustak.yespustakapp.dao.DownloadBookDao;
+import com.yespustak.yespustakapp.database.YpDatabase;
+import com.yespustak.yespustakapp.models.DownloadBook;
 import com.yespustak.yespustakapp.models.NoteModel;
 import com.yespustak.yespustakapp.utils.ModelSharedPref;
 import com.yespustak.yespustakapp.utils.SharedVariables;
@@ -34,6 +42,7 @@ public class EditNoteFragment extends DialogFragment implements View.OnClickList
     LinearLayout llTimestampContainer;
     TextView tvTimestamp;
     ImageView ivPin;
+    Button gotoMenu;
     Button btnSave;
 
     NotesFragmentViewModel viewModel;
@@ -123,9 +132,48 @@ public class EditNoteFragment extends DialogFragment implements View.OnClickList
         llTimestampContainer = view.findViewById(R.id.ll_timestamp_container);
         tvTimestamp = view.findViewById(R.id.tv_timestamp);
         btnSave = view.findViewById(R.id.btn_save);
-
+        gotoMenu = view.findViewById(R.id.gotToBook);
         ivPin.setOnClickListener(this);
         btnSave.setOnClickListener(this);
+
+        gotoMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                PopupMenu popup = new PopupMenu(getContext(), gotoMenu);
+//                //Inflating the Popup using xml file
+//                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+//
+//                //registering popup with OnMenuItemClickListener
+//                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+//                    public boolean onMenuItemClick(MenuItem item) {
+//
+//                        switch (item.getItemId())
+//                        {
+//                            case R.id.gotToBook:
+                                DownloadBookDao downloadBookDao;
+                                YpDatabase database = YpDatabase.getInstance(getContext());
+                                downloadBookDao = database.downloadBookDao();
+                                DownloadBook downloadBook = downloadBookDao.getBook(note.getBookId());
+                                Log.e("TAG", "onClick: "+downloadBook.getTitle() );
+                                utils.openPdfActivity2(getActivity(), Uri.parse(downloadBook.getFileUri()),downloadBook.getRid(),downloadBook.getPassword(), note.getDescription(), note.getBook_page_no());
+//                                break;
+//
+//
+//                            default:
+//                                break;
+//                        }
+//
+//                       // Toast.makeText(getContext(),"You Clicked : " + item.getTitle(), Toast.LENGTH_SHORT).show();
+//                        return true;
+//                    }
+//                });
+//
+//                popup.show();//showing popup menu
+
+        }
+        });
+
+
     }
 
     private void updateView() {

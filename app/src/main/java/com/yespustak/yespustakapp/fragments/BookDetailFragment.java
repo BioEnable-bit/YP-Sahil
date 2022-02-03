@@ -3,6 +3,7 @@ package com.yespustak.yespustakapp.fragments;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -13,9 +14,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,18 +29,24 @@ import com.yespustak.yespustakapp.Constants;
 import com.yespustak.yespustakapp.R;
 import com.yespustak.yespustakapp.activities.FragmentActivity;
 import com.yespustak.yespustakapp.adapters.HorizontalRecyclerViewAdapter;
+import com.yespustak.yespustakapp.adapters.HorizontalRecyclerViewAdapter2;
 import com.yespustak.yespustakapp.api.Retrofit2Client;
 import com.yespustak.yespustakapp.api.response.AddToCart;
 import com.yespustak.yespustakapp.api.response.BookDetail;
 import com.yespustak.yespustakapp.api.response.RecommendationList;
+import com.yespustak.yespustakapp.dao.DownloadBookDao;
+import com.yespustak.yespustakapp.database.YpDatabase;
 import com.yespustak.yespustakapp.models.BookDetailModel;
 import com.yespustak.yespustakapp.models.BookModel;
+import com.yespustak.yespustakapp.models.DownloadBook;
+import com.yespustak.yespustakapp.services.DownloadService;
 import com.yespustak.yespustakapp.utils.AdapterItemClickListener;
 import com.yespustak.yespustakapp.utils.ModelSharedPref;
 import com.yespustak.yespustakapp.utils.SharedPref;
 import com.yespustak.yespustakapp.utils.SharedVariables;
 import com.yespustak.yespustakapp.utils.likeButton.LikeButtonView;
 import com.yespustak.yespustakapp.utils.utils;
+import com.yespustak.yespustakapp.viewmodels.LibraryFragmentViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +79,10 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
     LikeButtonView lbvFavourite;
 
     RecyclerView rvRecommendation;
-    HorizontalRecyclerViewAdapter adapter;
+    HorizontalRecyclerViewAdapter2 adapter;
     ArrayList<BookModel> recommendationBookList;
+    LibraryFragmentViewModel viewModel;
+
 
     int[] cardBgDrawables = {R.drawable.card_gradient_bg_blue, R.drawable.card_gradient_bg_orange,
             R.drawable.card_gradient_bg_green, R.drawable.card_gradient_bg_violet,
@@ -92,7 +103,7 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bookDetailModel = ModelSharedPref.getInstance().getModel(BookDetailModel.class);
-
+        viewModel = new ViewModelProvider(this).get(LibraryFragmentViewModel.class);
         setHasOptionsMenu(true);
     }
 
@@ -189,6 +200,8 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
 
     public void getBookDetails(int bookId) {
         showProgress(true);
+
+        Log.e(TAG, "getBookDetails: "+bookId);
 
         //also fetch recommendation books
         getRecommendedBook();
@@ -319,7 +332,7 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
         rvRecommendation.setHasFixedSize(true);
         rvRecommendation.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         recommendationBookList = new ArrayList<>();
-        adapter = new HorizontalRecyclerViewAdapter(recommendationBookList, this);
+        adapter = new HorizontalRecyclerViewAdapter2(recommendationBookList, this);
 
         rvRecommendation.setAdapter(adapter);
 
@@ -331,6 +344,8 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
         //final SweetAlertDialog progressDialog = utils.showProgressBar(getContext());
         showRecommendationProgress(true);
         String deviceId = utils.getIMEINumber();
+
+        Log.e(TAG, "getRecommendedBook: "+bookDetailModel.getId() );
         Call<RecommendationList> call = Retrofit2Client.getInstance().getApiService().getRecommendation(deviceId, bookDetailModel.getId());
         call.enqueue(new Callback<RecommendationList>() {
             @Override
@@ -403,20 +418,42 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
         tvBookName.setText(bookDetailModel.getTitle());
         tvDescription.setText(bookDetailModel.getBookDescription());
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            tvMrp.setText(getString(R.string.text_price_with_rs_sign, Double.parseDouble(bookDetailModel.getMrp())));
-            tvMrp.setPaintFlags(tvMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            tvISBN.setText(Html.fromHtml(getString(R.string.text_isbn, bookDetailModel.getIsbn()), Html.FROM_HTML_MODE_LEGACY));
-            tvAuthor.setText(Html.fromHtml(getString(R.string.text_author, bookDetailModel.getAuthor()), Html.FROM_HTML_MODE_LEGACY));
-            tvPublication.setText(Html.fromHtml(getString(R.string.text_publication, bookDetailModel.getPublisherName()), Html.FROM_HTML_MODE_LEGACY));
-            tvSubject.setText(Html.fromHtml(getString(R.string.text_Subject, bookDetailModel.getSubject()), Html.FROM_HTML_MODE_LEGACY));
-            tvPagesCount.setText(Html.fromHtml(getString(R.string.text_no_of_pages, bookDetailModel.getPageCount()), Html.FROM_HTML_MODE_LEGACY));
-            tvClass.setText(Html.fromHtml(getString(R.string.text_class, bookDetailModel.getBookClass()), Html.FROM_HTML_MODE_LEGACY));
-            tvBoard.setText(Html.fromHtml(getString(R.string.text_board, bookDetailModel.getBoardName()), Html.FROM_HTML_MODE_LEGACY));
-            btnYpp.setText(Html.fromHtml(getString(R.string.text_ypp, Double.parseDouble(bookDetailModel.getYpp())), Html.FROM_HTML_MODE_LEGACY));
-            lbvFavourite.setChecked(bookDetailModel.isFavourite());
-        }
 
+        Log.e(TAG, "setData: "+bookDetailModel.getNcrt_boook_flag());
+
+        if(bookDetailModel.getNcrt_boook_flag().equals(0)) {
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                tvMrp.setText("MRP:"+getString(R.string.text_price_with_rs_sign, Double.parseDouble(bookDetailModel.getMrp())));
+                tvMrp.setPaintFlags(tvMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                tvISBN.setText(Html.fromHtml(getString(R.string.text_isbn, bookDetailModel.getIsbn()), Html.FROM_HTML_MODE_LEGACY));
+                tvAuthor.setText(Html.fromHtml(getString(R.string.text_author, bookDetailModel.getAuthor()), Html.FROM_HTML_MODE_LEGACY));
+                tvPublication.setText(Html.fromHtml(getString(R.string.text_publication, bookDetailModel.getPublisherName()), Html.FROM_HTML_MODE_LEGACY));
+                tvSubject.setText(Html.fromHtml(getString(R.string.text_Subject, bookDetailModel.getSubject()), Html.FROM_HTML_MODE_LEGACY));
+                tvPagesCount.setText(Html.fromHtml(getString(R.string.text_no_of_pages, bookDetailModel.getPageCount()), Html.FROM_HTML_MODE_LEGACY));
+                tvClass.setText(Html.fromHtml(getString(R.string.text_class, bookDetailModel.getBookClass()), Html.FROM_HTML_MODE_LEGACY));
+                tvBoard.setText(Html.fromHtml(getString(R.string.text_board, bookDetailModel.getBoardName()), Html.FROM_HTML_MODE_LEGACY));
+                btnYpp.setText(Html.fromHtml(getString(R.string.text_ypp, Double.parseDouble(bookDetailModel.getYpp())), Html.FROM_HTML_MODE_LEGACY));
+                lbvFavourite.setChecked(bookDetailModel.isFavourite());
+            }
+        } else
+        {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+                tvMrp.setText("MRP:"+getString(R.string.text_price_with_rs_sign, Double.parseDouble(bookDetailModel.getMrp())));
+                tvMrp.setPaintFlags(tvMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                btnAddToCart.setVisibility(View.GONE);
+                tvISBN.setText(Html.fromHtml(getString(R.string.text_isbn, bookDetailModel.getIsbn()), Html.FROM_HTML_MODE_LEGACY));
+                tvAuthor.setText(Html.fromHtml(getString(R.string.text_author, bookDetailModel.getAuthor()), Html.FROM_HTML_MODE_LEGACY));
+                tvPublication.setText(Html.fromHtml(getString(R.string.text_publication, bookDetailModel.getPublisherName()), Html.FROM_HTML_MODE_LEGACY));
+                tvSubject.setText(Html.fromHtml(getString(R.string.text_Subject, bookDetailModel.getSubject()), Html.FROM_HTML_MODE_LEGACY));
+                tvPagesCount.setText(Html.fromHtml(getString(R.string.text_no_of_pages, bookDetailModel.getPageCount()), Html.FROM_HTML_MODE_LEGACY));
+                tvClass.setText(Html.fromHtml(getString(R.string.text_class, bookDetailModel.getBookClass()), Html.FROM_HTML_MODE_LEGACY));
+                tvBoard.setText(Html.fromHtml(getString(R.string.text_board, bookDetailModel.getBoardName()), Html.FROM_HTML_MODE_LEGACY));
+                btnYpp.setText("Free Download");
+                btnYpp.setTypeface(btnYpp.getTypeface(), Typeface.BOLD);
+                lbvFavourite.setChecked(bookDetailModel.isFavourite());
+            }
+        }
         updateActionView();
 
     }
@@ -442,6 +479,16 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
             btnAddToCart.setVisibility(View.GONE);
             btnYpp.setVisibility(View.GONE);
             btnAlreadyPurchased.setVisibility(View.VISIBLE);
+
+            Log.e(TAG, "updateActionView: "+bookDetailModel.getNcrt_boook_flag());
+
+
+//            if(bookDetailModel.getNcrt_boook_flag().equals(0))
+//                btnAlreadyPurchased.setText("Already downloaded");
+
+
+
+
         } else {
 //            btnAddToCart.setEnabled(!existInCart);
             btnAddToCart.setText(existInCart ? getString(R.string.text_already_exist_in_cart) : getString(R.string.text_add_to_cart));
@@ -462,7 +509,18 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
             case R.id.btn_ypp:
                 List<String> bookIds = new ArrayList<>();
                 bookIds.add(String.valueOf(bookDetailModel.getId()));
-                ((FragmentActivity) requireActivity()).startPayment((Integer.parseInt(bookDetailModel.getYpp()) * 100), bookIds);
+
+                if(bookDetailModel.getNcrt_boook_flag().equals(0)) {
+                    ((FragmentActivity) requireActivity()).startPayment((Integer.parseInt(bookDetailModel.getYpp()) * 100), bookIds);
+                }
+                else{
+                    YpDatabase database = YpDatabase.getInstance(getContext());
+                    DownloadBookDao downloadBookDao =  database.downloadBookDao();
+                    downloadBookDao.insert(new DownloadBook("Xerox", "NCRT", "https://www.eurofound.europa.eu/sites/default/files/ef_publication/field_ef_document/ef1710en.pdf", "uploads/publishers/books/6/1623417535compacta.jpg"));
+                 //   requireActivity().startService(new Intent(getActivity(), DownloadService.class));
+                    Toast.makeText(getContext(), "Books download has been started. Go to My Pustakalay for download status", Toast.LENGTH_LONG).show();
+                }
+
                 break;
             case R.id.btn_add_to_cart:
                 if (existInCart)

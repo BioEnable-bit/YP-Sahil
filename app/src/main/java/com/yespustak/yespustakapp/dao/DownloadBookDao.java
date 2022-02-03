@@ -36,6 +36,9 @@ public interface DownloadBookDao {
     @Query("UPDATE DOWNLOAD_BOOKS SET title = :title, publication = :publication, imgUrl = :imgUrl, fileUrl = :fileUrl WHERE rid = :rId")
     void updateFields(int rId, String title, String publication, String imgUrl, String fileUrl);
 
+    @Query("select * from download_books where rid= :id")
+    DownloadBook getBook(int id);
+
 //    @Query("DELETE FROM DOWNLOAD_BOOKS WHERE id in (:idList)")
 //    void deleteBatch(List<Integer> idList);
 }

@@ -20,19 +20,25 @@ import android.webkit.WebView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.pspdfkit.annotations.Annotation;
+import com.pspdfkit.annotations.HighlightAnnotation;
 import com.pspdfkit.annotations.LinkAnnotation;
 import com.pspdfkit.annotations.SquigglyAnnotation;
 import com.pspdfkit.annotations.StrikeOutAnnotation;
+import com.pspdfkit.annotations.TextMarkupAnnotation;
 import com.pspdfkit.annotations.UnderlineAnnotation;
 import com.pspdfkit.annotations.actions.Action;
 import com.pspdfkit.annotations.actions.UriAction;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
 import com.pspdfkit.document.PdfDocument;
+import com.pspdfkit.document.search.SearchResult;
+import com.pspdfkit.document.search.TextSearch;
 import com.pspdfkit.ui.PdfActivity;
 import com.pspdfkit.ui.special_mode.controller.AnnotationTool;
+import com.pspdfkit.ui.special_mode.manager.TextSelectionManager;
 import com.pspdfkit.ui.toolbar.AnnotationCreationToolbar;
 import com.pspdfkit.ui.toolbar.AnnotationEditingToolbar;
 import com.pspdfkit.ui.toolbar.ContextualToolbar;
@@ -56,6 +62,7 @@ import com.yespustak.yespustakapp.utils.utils;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Timer;
@@ -77,7 +84,8 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
     private ContextualToolbarMenuItem cmiCreateNote, cmiEditNote, cmiSearchDictionary, cmiTranslate, cmiUnderline, cmiStrikeout, cmiSquiggle;
 
     boolean isBackingUp = false;
-    int bookId;
+    int bookId,book_page_no;
+    String note;
     HashMap<String, String> formFieldsMap;
 
     NotesRepo notesRepo;
@@ -85,13 +93,29 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
     List<NoteModel> notes;
     WebView webView;
     Timer  timer;
+    PdfDocument pdfDocument;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
             bookId = intent.getIntExtra("book_id", 0);
+            note = intent.getStringExtra("note");
+
+
+            Log.e(TAG, "onCreate: "+bookId );
+
+            if(!note.equals("null"))
+            {
+
+            }
         }
+
+
+
+
+
         // Register the activity as a callback for contextual toolbar changes.
         // It will be called once the `TextSelectionToolbar` is going to be presented.
         super.onCreate(savedInstanceState);
@@ -103,28 +127,29 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
         //get pdf form data
 //        getBookData();
 
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                try {
-                    Log.e(TAG, "Sahil" );
-                    Log.e(TAG, "run: "+getSelectedURL() );
-                    String url = getSelectedURL();
-                    if(url!=null && isValidURL(url)) {
-                        Intent intent = new Intent(MyPdfActivity.this, DemoActivity.class);
-                        intent.putExtra("LinkUrl", url);
-                        startActivity(intent);
-                        timer.cancel();
-                    }
-                }
-                catch (Exception e)
-                {
-                    Log.e(TAG, "run: "+e );
-                }
-
-            }
-        }, 0, 1000);
+//        timer = new Timer();
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                try {
+////                    Log.e(TAG, "Sahil" );
+////                    Log.e(TAG, "run: "+getSelectedURL() );
+//                    String url = getSelectedURL();
+//                    url = url.replaceAll("\\s+","");
+//                    if(url!=null && isValidURL(url)) {
+//                        Intent intent = new Intent(MyPdfActivity.this, DemoActivity.class);
+//                        intent.putExtra("LinkUrl", url);
+//                        startActivity(intent);
+//                        timer.cancel();
+//                    }
+//                }
+//                catch (Exception e)
+//                {
+//                    Log.e(TAG, "run: "+e );
+//                }
+//
+//            }
+//        }, 0, 1000);
     }
 
     public boolean isValidURL(String url) {
@@ -138,6 +163,34 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
         return true;
     }
 
+
+//    @Override
+//    public void onResume(){
+//        super.onResume();
+//        timer.scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                try {
+//                    Log.e(TAG, "Sahil" );
+//                    Log.e(TAG, "run: "+getSelectedURL() );
+//                    String url = getSelectedURL();
+//                    url = url.replaceAll("\\s+","");
+//                    if(url!=null && isValidURL(url)) {
+//                        Intent intent = new Intent(MyPdfActivity.this, DemoActivity.class);
+//                        intent.putExtra("LinkUrl", url);
+//                        startActivity(intent);
+//                        timer.cancel();
+//                    }
+//                }
+//                catch (Exception e)
+//                {
+//                    Log.e(TAG, "run: "+e );
+//                }
+//
+//            }
+//        }, 0, 1000);
+//
+//    }
     @Override
     public boolean onPageClick(@NonNull PdfDocument document, int pageIndex, @Nullable MotionEvent event, @Nullable PointF pagePosition, @Nullable Annotation clickedAnnotation) {
 //        Log.i(TAG, "onPageClick: " + clickedAnnotation.toString());
@@ -149,6 +202,10 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
 
             // Every link annotation may have an action defined.
             final Action action = linkAnnotation.getAction();
+
+
+            Log.e(TAG, "pageIndex: "+pageIndex);
+
 
             // Check if an action exists and if it is a `UriAction`.
             if (action instanceof UriAction) {
@@ -206,6 +263,17 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
         return handled;
     }
 
+
+
+    @Override
+    public void onPageChanged(@NonNull PdfDocument document, int pageIndex) {
+        super.onPageChanged(document, pageIndex);
+
+        book_page_no = pageIndex;
+
+        Log.e(TAG, "onPageChanged: "+pageIndex );
+    }
+
     private void createCmi() {
         // Create a custom menu item that will be shown inside the text selection toolbar.
         cmiCreateNote = ContextualToolbarMenuItem.createSingleItem(
@@ -218,6 +286,8 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
                 ContextualToolbarMenuItem.Position.END,
                 false
         );
+
+
 
         // Create a custom menu item that will be shown inside the text selection toolbar.
         cmiEditNote = ContextualToolbarMenuItem.createSingleItem(
@@ -417,7 +487,7 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
                     isBackingUp = true;
 //                    List<PdfFormField> pdfFormFieldsData = utils.getPdfFormDataFrom(formElements);
                     PdfData pdfData = new PdfData(utils.getIMEINumber(), bookId, utils.getPdfFormDataFrom(formElements));
-                    //call service from here
+                    //call service from her
 
                     if (runInBackground) {
                         Intent intent = new Intent(this, SendPdfDataService.class);
@@ -600,9 +670,13 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
             switch (menuItem.getId()) {
                 case R.id.mi_create_note: {
                     handled = true;
+
+                    Log.e(TAG, "onDisplayContextualToolbar: "+bookId);
                     NoteModel note = new NoteModel();
                     note.setBookId(bookId);
+                    note.setBook_page_no(book_page_no);
                     note.setDescription(getSelectedText());
+                    heightLight();
                     EditNoteFragment editNoteDialogFragment = EditNoteFragment.newInstance(note);
                     editNoteDialogFragment.setOnDismissListener(this);
                     editNoteDialogFragment.show(getSupportFragmentManager(), "editNoteDialogFragment");
@@ -615,14 +689,16 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
                     EditNoteFragment editNoteDialogFragment = EditNoteFragment.newInstance(note);
                     editNoteDialogFragment.setOnDismissListener(this);
                     editNoteDialogFragment.show(getSupportFragmentManager(), "editNoteDialogFragment");
+
                     break;
                 }
                 case R.id.mi_search_dictionary: {
                     PopUpDialog dialog = new PopUpDialog(this, getSelectedText());
-
                     dialog.setCanceledOnTouchOutside(true);
                     dialog.setOnDismissListener(dialog1 -> getPdfFragment().exitCurrentlyActiveMode());
                     dialog.show();
+
+                    Log.e(TAG, "search ..." );
                     break;
                 }
                 case R.id.mi_translate: {
@@ -630,16 +706,17 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
                     break;
                 }
 
+
                 case R.id.mi_underline:
-                    // Define the places you want to apply annotation
-                    List<RectF> textRects = getPdfFragment().getTextSelection().textBlocks;
-                    // Create the highlight on the first page.
-                    @SuppressLint("Range") final UnderlineAnnotation underlineAnnotation = new UnderlineAnnotation(getPdfFragment().getPageIndex(), textRects);
-//                    underlineAnnotation.setColor(Color.RED);
-                    underlineAnnotation.setColor(getPdfFragment().getAnnotationPreferences().getColor(AnnotationTool.UNDERLINE));
-                    // Add it to the page.
-                    getPdfFragment().addAnnotationToPage(underlineAnnotation, false, () -> getPdfFragment().exitCurrentlyActiveMode());
-                    handled = true;
+//                    // Define the places you want to apply annotation
+//                    List<RectF> textRects = getPdfFragment().getTextSelection().textBlocks;
+//                    // Create the highlight on the first page.
+//                    @SuppressLint("Range") final UnderlineAnnotation underlineAnnotation = new UnderlineAnnotation(getPdfFragment().getPageIndex(), textRects);
+////                    underlineAnnotation.setColor(Color.RED);
+//                    underlineAnnotation.setColor(getPdfFragment().getAnnotationPreferences().getColor(AnnotationTool.UNDERLINE));
+//                    // Add it to the page.
+//                    getPdfFragment().addAnnotationToPage(underlineAnnotation, false, () -> getPdfFragment().exitCurrentlyActiveMode());
+                    handled = underLine();
                     break;
 
                 case R.id.mi_strikeout:
@@ -660,18 +737,72 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
                     handled = true;
                     break;
 
+
+
+
             }
 
             return handled;
         });
     }
 
-    private String getSelectedText() {
-        String selectedText = getPdfFragment().getTextSelection().text;
-        if (selectedText != null)
-            return selectedText.replaceAll("[^A-Za-z\\s]", "").trim();
+    private boolean underLine()
+    {
 
-        return null;
+
+
+        List<RectF> textRects = getPdfFragment().getTextSelection().textBlocks;
+        // Create the highlight on the first page.
+        @SuppressLint("Range") final UnderlineAnnotation underlineAnnotation = new UnderlineAnnotation(getPdfFragment().getPageIndex(), textRects);
+//                    underlineAnnotation.setColor(Color.RED);
+        underlineAnnotation.setColor(getPdfFragment().getAnnotationPreferences().getColor(AnnotationTool.UNDERLINE));
+        // Add it to the page.
+        getPdfFragment().addAnnotationToPage(underlineAnnotation, false, () -> getPdfFragment().exitCurrentlyActiveMode());
+        return true;
+    }
+
+
+    private boolean heightLight()
+    {
+
+
+
+        List<RectF> textRects = getPdfFragment().getTextSelection().textBlocks;
+        // Create the highlight on the first page.
+        @SuppressLint("Range") final HighlightAnnotation underlineAnnotation = new HighlightAnnotation(getPdfFragment().getPageIndex(), textRects);
+//                    underlineAnnotation.setColor(Color.RED);
+        underlineAnnotation.setColor(getPdfFragment().getAnnotationPreferences().getColor(AnnotationTool.HIGHLIGHT));
+        // Add it to the page.
+        getPdfFragment().addAnnotationToPage(underlineAnnotation, false, () -> getPdfFragment().exitCurrentlyActiveMode());
+        return true;
+    }
+
+
+    private void search(String text)
+    {
+        PopUpDialog dialog = new PopUpDialog(this, text);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.setOnDismissListener(dialog1 -> getDocument());
+        dialog.show();
+
+        Log.e(TAG, "search ..." );
+    }
+
+    @Override
+    public void startSearch(@Nullable String initialQuery, boolean selectInitialQuery, @Nullable Bundle appSearchData, boolean globalSearch) {
+        super.startSearch(initialQuery, selectInitialQuery, appSearchData, globalSearch);
+
+    }
+
+    private String getSelectedText( ) {
+
+        if(note.equals("null")) {
+            String selectedText = getPdfFragment().getTextSelection().text;
+            if (selectedText != null)
+                return selectedText.replaceAll("[^A-Za-z\\s]", "").trim();
+        }
+
+        return  null;
     }
 
     private String getSelectedURL() {

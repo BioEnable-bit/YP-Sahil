@@ -33,12 +33,27 @@ public class BookModel {
     @Expose
     private double ypp;
 
+    @SerializedName("ncrt_boook_flag")
+    @Expose
+    private Integer ncrt_boook_flag;
+
     private int cardBgDrawable, cardShadowColor;
 
     public BookModel() {
     }
 
-    public BookModel(Integer id, String subject, String title, String imageUrl, String publication, double mrp, double ypp) {
+//    public BookModel(Integer id, String subject, String title, String imageUrl, String publication, double mrp, double ypp) {
+//        this.id = id;
+//        this.subject = subject;
+//        this.title = title;
+//        this.imageUrl = imageUrl;
+//        this.publication = publication;
+//        this.mrp = mrp;
+//        this.ypp = ypp;
+//    }
+
+
+    public BookModel(Integer id, String subject, String title, String imageUrl, String publication, double mrp, double ypp, Integer ncrt_boook_flag) {
         this.id = id;
         this.subject = subject;
         this.title = title;
@@ -46,6 +61,7 @@ public class BookModel {
         this.publication = publication;
         this.mrp = mrp;
         this.ypp = ypp;
+        this.ncrt_boook_flag = ncrt_boook_flag;
     }
 
     public Integer getId() {
@@ -102,6 +118,14 @@ public class BookModel {
 
     public void setYpp(double ypp) {
         this.ypp = ypp;
+    }
+
+    public Integer getNcrt_boook_flag() {
+        return ncrt_boook_flag;
+    }
+
+    public void setNcrt_boook_flag(Integer ncrt_boook_flag) {
+        this.ncrt_boook_flag = ncrt_boook_flag;
     }
 
     public int getCardBgDrawable() {

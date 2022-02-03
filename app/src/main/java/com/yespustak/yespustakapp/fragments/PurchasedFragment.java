@@ -130,7 +130,7 @@ public class PurchasedFragment extends Fragment implements AdapterItemClickListe
     public void onClick(Object object) {
         DownloadBook book = (DownloadBook) object;
         if (book.getStatus() == Status.COMPLETED)
-            utils.openPdfActivity(requireActivity(), Uri.parse(book.getFileUri()), book.getRid(),book.getPassword());
+            utils.openPdfActivity2(requireActivity(), Uri.parse(book.getFileUri()), book.getRid(),book.getPassword(),"null",0);
         else
             utils.showToast(getString(R.string.msg_book_being_downloaded));
     }

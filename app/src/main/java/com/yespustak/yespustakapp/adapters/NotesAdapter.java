@@ -1,5 +1,6 @@
 package com.yespustak.yespustakapp.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -57,6 +59,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
 
 
         holder.itemView.setOnClickListener(v -> clickListener.onClick(note));
+
+       holder.tvTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("TAG", "onClick: " );
+                //utils.openPdfActivity();
+            }
+        });
     }
 
     @Override
@@ -107,6 +117,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder> 
             ibMore = view.findViewById(R.id.ib_more);
 
             ibMore.setOnClickListener(this);
+
+
         }
 
         @Override

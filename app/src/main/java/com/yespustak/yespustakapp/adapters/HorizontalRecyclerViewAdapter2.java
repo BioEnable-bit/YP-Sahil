@@ -1,7 +1,6 @@
 package com.yespustak.yespustakapp.adapters;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Build;
@@ -29,14 +28,14 @@ import com.yespustak.yespustakapp.utils.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<HorizontalRecyclerViewAdapter.HorizontalRVViewHolder> {
+public class HorizontalRecyclerViewAdapter2 extends RecyclerView.Adapter<HorizontalRecyclerViewAdapter2.HorizontalRVViewHolder> {
     private static final String TAG = "HorizontalRecyclerViewA";
 
 //    Context context; //there is no use of this variable. safe to remove
     ArrayList<BookModel> arrayList;
     AdapterItemClickListener clickListener;
 
-    public HorizontalRecyclerViewAdapter(ArrayList<BookModel> arrayList, AdapterItemClickListener clickListener) {
+    public HorizontalRecyclerViewAdapter2(ArrayList<BookModel> arrayList, AdapterItemClickListener clickListener) {
 //        this.context = context;
         this.arrayList = arrayList;
         this.clickListener = clickListener;
@@ -62,27 +61,23 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
         BookModel bookModel = arrayList.get(position);
         holder.textViewTitle.setText(bookModel.getTitle());
         holder.tvPublication.setText(utils.getStringResource(R.string.text_by_publication_name, bookModel.getPublication()));
-
-
-        Log.e(TAG, "onBindViewHolder: "+bookModel.getId() );
         holder.tvMrp.setText(utils.getStringResource(R.string.text_mrp, bookModel.getMrp()));
         holder.tvMrp.setPaintFlags(holder.tvMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         holder.tvYpp.setText(utils.getStringResource(R.string.text_ypp, bookModel.getYpp()));
 
         Log.e(TAG, "Book NCRT : "+bookModel.getNcrt_boook_flag());
 
-        if(bookModel.getNcrt_boook_flag().equals(0))
-        {
-            holder.tvMrp.setText(utils.getStringResource(R.string.text_mrp, bookModel.getMrp()));
-            holder.tvMrp.setPaintFlags(holder.tvMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-            holder.tvYpp.setText(utils.getStringResource(R.string.text_ypp, bookModel.getYpp()));
-        }
-        else
+        if(bookModel.getPublication().equals("NCERT"))
         {
             holder.tvMrp.setPaintFlags(holder.tvMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.tvMrp.setPaintFlags(holder.tvMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             holder.tvYpp.setText("YPP: FREE");
-          //  holder.tvYpp.setTypeface(holder.tvYpp.getTypeface(), Typeface.BOLD);
+        }
+        else
+        {
+            holder.tvMrp.setText(utils.getStringResource(R.string.text_mrp, bookModel.getMrp()));
+            holder.tvMrp.setPaintFlags(holder.tvMrp.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.tvYpp.setText(utils.getStringResource(R.string.text_ypp, bookModel.getYpp()));
         }
 
         holder.clCard.setBackground(AppCompatResources.getDrawable(holder.clCard.getContext(), bookModel.getCardBgDrawable()));
