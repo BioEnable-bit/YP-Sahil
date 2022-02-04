@@ -475,16 +475,18 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
         existInCart = SharedVariables.isBookExistInCart(bookDetailModel.getId());
         boolean isPurchased = SharedVariables.isBookPurchased(bookDetailModel.getId());
 
+        Log.e(TAG, "updateActionView: "+isPurchased );
+
         if (isPurchased) {
             btnAddToCart.setVisibility(View.GONE);
             btnYpp.setVisibility(View.GONE);
             btnAlreadyPurchased.setVisibility(View.VISIBLE);
 
-            Log.e(TAG, "updateActionView: "+bookDetailModel.getNcrt_boook_flag());
+         //   Log.e(TAG, "updateActionView: "+bookDetailModel.getPublisherName());
 
 
-//            if(bookDetailModel.getNcrt_boook_flag().equals(0))
-//                btnAlreadyPurchased.setText("Already downloaded");
+
+
 
 
 
@@ -514,10 +516,12 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
                     ((FragmentActivity) requireActivity()).startPayment((Integer.parseInt(bookDetailModel.getYpp()) * 100), bookIds);
                 }
                 else{
-                    YpDatabase database = YpDatabase.getInstance(getContext());
-                    DownloadBookDao downloadBookDao =  database.downloadBookDao();
-                    downloadBookDao.insert(new DownloadBook("Xerox", "NCRT", "https://www.eurofound.europa.eu/sites/default/files/ef_publication/field_ef_document/ef1710en.pdf", "uploads/publishers/books/6/1623417535compacta.jpg"));
-                 //   requireActivity().startService(new Intent(getActivity(), DownloadService.class));
+
+                    viewModel.insert(new DownloadBook(bookDetailModel.getTitle(),
+                            bookDetailModel.getPublisherName(),
+                            bookDetailModel.getBook_file(),
+                            bookDetailModel.getImageUrl1()));
+                    requireActivity().startService(new Intent(getActivity(), DownloadService.class));
                     Toast.makeText(getContext(), "Books download has been started. Go to My Pustakalay for download status", Toast.LENGTH_LONG).show();
                 }
 

@@ -232,6 +232,7 @@ public class DownloadService extends Service implements Observer<List<DownloadBo
     }
 
     private Request createRequest(DownloadBook book) {
+       // String fileUrl = UrlEscapers.urlFragmentEscaper().escape(Constants.DASHBOARD_URL + book.getFileUrl());
         String fileUrl = UrlEscapers.urlFragmentEscaper().escape(Constants.DASHBOARD_URL + book.getFileUrl());
         Log.e("FileUrl",""+fileUrl);
 //            String fileUrl = utils.getRandomPdfLink(urlIndex);

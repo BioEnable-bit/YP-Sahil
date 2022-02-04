@@ -61,6 +61,8 @@ public class SharedVariables {
         for (DownloadBook book : downloadBooks)
             if (book.getRid() == bookId)
                 return true;
+            else if(book.getPublication() == "NCERT")
+                return true;
 
         return false;
     }

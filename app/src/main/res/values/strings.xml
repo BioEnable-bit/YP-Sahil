@@ -207,7 +207,7 @@
     <string name="download_size_mb">%1$s MB</string>
 
     <string name="text_progress_percentage">%d%%</string>
-    <string name="text_already_purchased">Already Purchased</string>
+    <string name="text_already_purchased">Already Downloaded</string>
     <string name="title_save">Save</string>
     <string name="title_school">School</string>
     <string name="title_class">Class</string>

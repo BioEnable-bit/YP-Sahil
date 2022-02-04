@@ -112,10 +112,10 @@ public class DownloadBookRepo {
                     insertedList.add(book.getRid());
                 }
 
-                for (Map.Entry<Integer, DownloadBook> entry : getBooksMap().entrySet()) {
-                    if (!insertedList.contains(entry.getValue().getRid()))
-                        delete(entry.getValue());
-                }
+//                for (Map.Entry<Integer, DownloadBook> entry : getBooksMap().entrySet()) {
+//                    if (!insertedList.contains(entry.getValue().getRid()))
+//                        delete(entry.getValue());
+//                }
 
                 //this is used to show/hide progress bar
                 isSyncing.setValue(false);

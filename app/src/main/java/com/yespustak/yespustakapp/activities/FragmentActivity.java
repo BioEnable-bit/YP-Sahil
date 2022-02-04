@@ -250,6 +250,70 @@ public class FragmentActivity extends AppCompatActivity implements PaymentResult
 
     }
 
+    public void startPayment2(int amount, List<String> bookIds) {
+        this.amount = amount;
+        this.bookIds = bookIds;
+
+        SweetAlertDialog progressDialog = utils.showProgressBar(this);
+        Checkout checkout = new Checkout();
+
+        /*
+         * Set your logo here
+         */
+        checkout.setImage(R.drawable.ic_logo);
+
+//        String credentials = Credentials.basic(DEMO_RAZORPAY_KEY, DEMO_RAZORPAY_SECRET);
+        Call<OrdersModel> call = Retrofit4Razorpay.getInstance().getApiService().getOrders(
+                SharedVariables.getRazorpayCredentials(), amount, Constants.INR);
+        call.enqueue(new Callback<OrdersModel>() {
+            @Override
+            public void onResponse(Call<OrdersModel> call, Response<OrdersModel> response) {
+                Log.e("Response", "" + response.message());
+                if (response.body() != null && response.isSuccessful()) {
+                    String orderId = response.body().getId();
+
+                    checkout.setKeyID(SharedVariables.getRazorpayKey());
+                    try {
+                        JSONObject options = new JSONObject();
+                        options.put("name", "Yes Pustak");
+//                        options.put("description", "Book ids: " + bookIds.toString());
+                        options.put("order_id", orderId);
+//                        options.put("theme.color",  "#" + Integer.toHexString(getResources().getColor(R.color.colorPrimary)));
+                        options.put("theme.color", "#F6925C");
+                        options.put("currency", Constants.INR);
+                        options.put("send_sms_hash", true);
+
+
+                        JSONObject preFill = new JSONObject();
+                        preFill.put("email", user.getEmail());
+                        preFill.put("contact", user.getMobileNo());
+                        options.put("prefill", preFill);
+
+                        JSONObject retryObj = new JSONObject();
+                        retryObj.put("enabled", false);
+                        retryObj.put("max_count", 2);
+                        options.put("retry", retryObj);
+
+                        checkout.open(FragmentActivity.this, options);
+
+                    } catch (JSONException exception) {
+                        Log.e("JSON Exception: ", exception.getLocalizedMessage());
+                    }
+
+                    utils.hideProgressBar(progressDialog);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<OrdersModel> call, Throwable t) {
+                Log.e("Order Error", t.getLocalizedMessage());
+                utils.hideProgressBar(progressDialog);
+            }
+        });
+
+    }
+
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem miCart = menu.findItem(R.id.mi_cart);
