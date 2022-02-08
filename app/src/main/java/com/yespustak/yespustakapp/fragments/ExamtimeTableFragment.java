@@ -69,7 +69,13 @@ public class ExamtimeTableFragment extends BaseFragment {
 
 
         //Instantiating an ArrayList object
-        list.add(new ExamtimetableModel(1,"Unit Test 2022","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
+        list.add(new ExamtimetableModel(1,"Unit Test - March 2022","" +
+                "1. Math        23/02/2022\n" +
+                "2. English    23/02/2022\n" +
+                "3. Science   23/02/2022\n" +
+                "4. Hindi        23/02/2022\n" +
+                "5. History    23/02/2022\n\n" +
+                "*Timing 09:00 Am to 11:30 AM","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
 
         Log.e("","Contents of the Array List: \n"+list);
 

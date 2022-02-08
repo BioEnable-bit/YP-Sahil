@@ -39,6 +39,9 @@ public interface DownloadBookDao {
     @Query("select * from download_books where rid= :id")
     DownloadBook getBook(int id);
 
+    @Query("select exists (select * from download_books where title = :name)")
+    boolean book_exist(String name);
+
 //    @Query("DELETE FROM DOWNLOAD_BOOKS WHERE id in (:idList)")
 //    void deleteBatch(List<Integer> idList);
 }

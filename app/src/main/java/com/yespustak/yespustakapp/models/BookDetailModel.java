@@ -59,6 +59,19 @@ public class BookDetailModel {
     @SerializedName("ypp")
     @Expose
     private String ypp;
+
+    @SerializedName("book_file")
+    @Expose
+    private String book_file;
+
+    public String getBook_file() {
+        return book_file;
+    }
+
+    public void setBook_file(String book_file) {
+        this.book_file = book_file;
+    }
+
     private final static long serialVersionUID = 8525098876926088829L;
 
     public Integer getId() {

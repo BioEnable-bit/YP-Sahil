@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +29,7 @@ import com.synnapps.carouselview.ImageListener;
 import com.yespustak.yespustakapp.Constants;
 import com.yespustak.yespustakapp.R;
 import com.yespustak.yespustakapp.activities.FragmentActivity;
+import com.yespustak.yespustakapp.activities.MainActivity;
 import com.yespustak.yespustakapp.adapters.HorizontalRecyclerViewAdapter;
 import com.yespustak.yespustakapp.adapters.HorizontalRecyclerViewAdapter2;
 import com.yespustak.yespustakapp.api.Retrofit2Client;
@@ -196,6 +198,10 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
         lbvFavourite.setClickListener(this);
 
 //        setData();
+
+
+
+        //YpDatabase ypDatabase = new
     }
 
     public void getBookDetails(int bookId) {
@@ -332,6 +338,10 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
         rvRecommendation.setHasFixedSize(true);
         rvRecommendation.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         recommendationBookList = new ArrayList<>();
+
+
+        Log.e(TAG, "setRecyclerView: "+recommendationBookList );
+
         adapter = new HorizontalRecyclerViewAdapter2(recommendationBookList, this);
 
         rvRecommendation.setAdapter(adapter);
@@ -449,8 +459,16 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
                 tvPagesCount.setText(Html.fromHtml(getString(R.string.text_no_of_pages, bookDetailModel.getPageCount()), Html.FROM_HTML_MODE_LEGACY));
                 tvClass.setText(Html.fromHtml(getString(R.string.text_class, bookDetailModel.getBookClass()), Html.FROM_HTML_MODE_LEGACY));
                 tvBoard.setText(Html.fromHtml(getString(R.string.text_board, bookDetailModel.getBoardName()), Html.FROM_HTML_MODE_LEGACY));
-                btnYpp.setText("Free Download");
-                btnYpp.setTypeface(btnYpp.getTypeface(), Typeface.BOLD);
+
+                DownloadBookDao downloadBookDao;
+                YpDatabase database = YpDatabase.getInstance(getContext());
+                downloadBookDao = database.downloadBookDao();
+                boolean isDownloaded = downloadBookDao.book_exist(bookDetailModel.getTitle());
+
+                if(isDownloaded)
+                btnYpp.setText("Already downloaded");
+                else{ btnYpp.setText("Free Download");
+                btnYpp.setTypeface(btnYpp.getTypeface(), Typeface.BOLD);}
                 lbvFavourite.setChecked(bookDetailModel.isFavourite());
             }
         }
@@ -475,17 +493,20 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
         existInCart = SharedVariables.isBookExistInCart(bookDetailModel.getId());
         boolean isPurchased = SharedVariables.isBookPurchased(bookDetailModel.getId());
 
+        Log.e(TAG, "updateActionView: "+isPurchased );
+
+
+//        if(bookDetailModel.getNcrt_boook_flag()==0) {
+//            btnAlreadyPurchased.setText("Already Purchased");
+//        }else
+//        {
+//            btnAlreadyPurchased.setText("Already Downloaded");
+//        }
+
         if (isPurchased) {
             btnAddToCart.setVisibility(View.GONE);
             btnYpp.setVisibility(View.GONE);
             btnAlreadyPurchased.setVisibility(View.VISIBLE);
-
-            Log.e(TAG, "updateActionView: "+bookDetailModel.getNcrt_boook_flag());
-
-
-//            if(bookDetailModel.getNcrt_boook_flag().equals(0))
-//                btnAlreadyPurchased.setText("Already downloaded");
-
 
 
 
@@ -496,6 +517,8 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
 
 
     }
+
+
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -514,11 +537,30 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
                     ((FragmentActivity) requireActivity()).startPayment((Integer.parseInt(bookDetailModel.getYpp()) * 100), bookIds);
                 }
                 else{
+                    DownloadBookDao downloadBookDao;
                     YpDatabase database = YpDatabase.getInstance(getContext());
-                    DownloadBookDao downloadBookDao =  database.downloadBookDao();
-                    downloadBookDao.insert(new DownloadBook("Xerox", "NCRT", "https://www.eurofound.europa.eu/sites/default/files/ef_publication/field_ef_document/ef1710en.pdf", "uploads/publishers/books/6/1623417535compacta.jpg"));
-                 //   requireActivity().startService(new Intent(getActivity(), DownloadService.class));
-                    Toast.makeText(getContext(), "Books download has been started. Go to My Pustakalay for download status", Toast.LENGTH_LONG).show();
+                    downloadBookDao = database.downloadBookDao();
+                    boolean isDownloaded = downloadBookDao.book_exist(bookDetailModel.getTitle());
+
+                    if(isDownloaded){
+                        Toast.makeText(getContext(), "Books is already downloaded. Go to My Pustakalay for download books", Toast.LENGTH_LONG).show();
+                        SharedPref.saveBoolean(TAG, Constants.OPEN_MY_PUSTAKALAY, true);
+                        requireActivity().finish();
+                    }
+                    else {
+
+                        viewModel.insert(new DownloadBook(
+                                bookDetailModel.getTitle(),
+                                bookDetailModel.getPublisherName(),
+                                bookDetailModel.getBook_file(),
+                                bookDetailModel.getImageUrl1()));
+                        requireActivity().startService(new Intent(getActivity(), DownloadService.class));
+
+
+                        SharedPref.saveBoolean(TAG, Constants.OPEN_MY_PUSTAKALAY, true);
+                        requireActivity().finish();
+                        Toast.makeText(getContext(), "Books download has been started. Go to My Pustakalay for download status", Toast.LENGTH_LONG).show();
+                    }
                 }
 
                 break;

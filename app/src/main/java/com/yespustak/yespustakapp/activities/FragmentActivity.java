@@ -121,13 +121,13 @@ public class FragmentActivity extends AppCompatActivity implements PaymentResult
                 navGraph.setStartDestination(R.id.notificationFragment);
                 break;
             case "assignments":
-                navGraph.setStartDestination(R.id.assignments);
-                break;
-
-            case "teacher_assignment":
-                title = "YES Pustak | "+getIntent().getStringExtra("teacher_name")+" Assignment";
                 navGraph.setStartDestination(R.id.teacher_assignment);
                 break;
+
+//            case "teacher_assignment":
+//                title = "YES Pustak | "+getIntent().getStringExtra("teacher_name")+" Assignment";
+//                navGraph.setStartDestination(R.id.teacher_assignment);
+//                break;
 
             case "notice":
                 navGraph.setStartDestination(R.id.notice);

@@ -67,13 +67,36 @@ public class AssignmentFragment extends BaseFragment {
 
 
         //Instantiating an ArrayList object
-        list.add(new AssignmentModel("1","Maths","123456","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
-        list.add(new AssignmentModel("2","English","123456","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
-        list.add(new AssignmentModel("3","Science","123456","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
-        list.add(new AssignmentModel("4","History","123456","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
-        list.add(new AssignmentModel("5","Hindi","123456","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
-        list.add(new AssignmentModel("6","Marathi","123456","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
-        list.add(new AssignmentModel("7","Sanskrit","123456","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
+        list.add(new AssignmentModel("1","Maths","Solve below questions\n" +
+                "1. 10 + 200 + 300 = ______?\n" +
+                "2. 15 + 254 + 900 = ______?\n" +
+                "3. 78 + 225 + 200 = ______?\n","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
+        list.add(new AssignmentModel("2","English","Write essays on one topic ?\n" +
+                "1. My Family.\n" +
+                "2. My Best Friend.\n" +
+                "3. My Hobby.\n" +
+                "4. My Mother.\n" +
+                "5. My Father.","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
+
+
+        list.add(new AssignmentModel("3","Science","Solve any 2 questions\n" +
+                "1. What is speed?\n" +
+                "2. Explain gravity?\n" +
+                "3. Give 2 examples of Speed & Gravity?","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
+
+
+
+        list.add(new AssignmentModel("4","Hindi","मुहावरों का अर्थ बताये। \n" +
+                "1. आँख का तारा, आँख की पुतली\n" +
+                "2. खून का प्यासा\n" +
+                "3. खून ठण्डा होना\n" +
+                "4. गढ़ फतह करना\n" +
+                "5. पीछा छुड़ाना","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
+
+
+        list.add(new AssignmentModel("5","History","Not assigned","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
+        list.add(new AssignmentModel("6","Marathi","Not assigned","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
+        list.add(new AssignmentModel("7","Sanskrit","Not assigned","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
 
         Log.e("","Contents of the Array List: \n"+list);
 

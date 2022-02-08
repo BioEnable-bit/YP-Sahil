@@ -127,29 +127,29 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
         //get pdf form data
 //        getBookData();
 
-//        timer = new Timer();
-//        timer.scheduleAtFixedRate(new TimerTask() {
-//            @Override
-//            public void run() {
-//                try {
-////                    Log.e(TAG, "Sahil" );
-////                    Log.e(TAG, "run: "+getSelectedURL() );
-//                    String url = getSelectedURL();
-//                    url = url.replaceAll("\\s+","");
-//                    if(url!=null && isValidURL(url)) {
-//                        Intent intent = new Intent(MyPdfActivity.this, DemoActivity.class);
-//                        intent.putExtra("LinkUrl", url);
-//                        startActivity(intent);
-//                        timer.cancel();
-//                    }
-//                }
-//                catch (Exception e)
-//                {
-//                    Log.e(TAG, "run: "+e );
-//                }
-//
-//            }
-//        }, 0, 1000);
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+//                    Log.e(TAG, "Sahil" );
+//                    Log.e(TAG, "run: "+getSelectedURL() );
+                    String url = getSelectedURL();
+                    url = url.replaceAll("\\s+","");
+                    if(url!=null && isValidURL(url)) {
+                        Intent intent = new Intent(MyPdfActivity.this, DemoActivity.class);
+                        intent.putExtra("LinkUrl", url);
+                        startActivity(intent);
+                        timer.cancel();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Log.e(TAG, "run: "+e );
+                }
+
+            }
+        }, 0, 1000);
     }
 
     public boolean isValidURL(String url) {

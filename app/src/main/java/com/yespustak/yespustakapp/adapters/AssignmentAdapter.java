@@ -46,7 +46,41 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         AssignmentModel faqModel = arrayList.get(position);
-        holder.tvTitle.setText(faqModel.getName());
+//        holder.tvTitle.setText(faqModel.getName());
+//        holder.tvDesc.setText(faqModel.getCreate_at());
+//
+//        final boolean isExpanded = position == expandedPosition;
+//        holder.tvDesc.setVisibility(isExpanded ? View.VISIBLE : View.GONE);
+//        holder.itemView.setActivated(isExpanded);
+//
+//        holder.ivExpand.setImageDrawable(AppCompatResources.getDrawable(holder.ivExpand.getContext(),
+//                isExpanded ? R.drawable.ic_baseline_keyboard_arrow_up_24 : R.drawable.ic_baseline_keyboard_arrow_down_24));
+//        holder.ivExpand.setColorFilter(holder.ivExpand.getContext().getResources()
+//                .getColor(isExpanded ? R.color.colorPrimary : android.R.color.darker_gray, holder.ivExpand.getContext().getTheme()));
+//
+//        if (isExpanded)
+//            previousExpandedPosition = position;
+//
+//        holder.itemView.setOnClickListener(v -> {
+////            expandedPosition = isExpanded ? -1 : position;
+////            notifyItemChanged(previousExpandedPosition);
+////            notifyItemChanged(position);
+//
+//
+//
+//            Intent intent = new Intent(context, DemoActivity.class);
+//            intent.putExtra("LinkUrl", faqModel.getUrl());
+//            context.startActivity(intent);
+//
+//            //https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf
+//
+////                boolean isExpanded = holder.tvDesc.getVisibility() == View.VISIBLE;
+////                holder.tvDesc.setVisibility(isExpanded ? View.GONE : View.VISIBLE);
+//
+////                TransitionManager.beginDelayedTransition(holder.cardView, new AutoTransition());
+//
+//        });
+          holder.tvTitle.setText(faqModel.getName());
         holder.tvDesc.setText(faqModel.getCreate_at());
 
         final boolean isExpanded = position == expandedPosition;
@@ -62,17 +96,9 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
             previousExpandedPosition = position;
 
         holder.itemView.setOnClickListener(v -> {
-//            expandedPosition = isExpanded ? -1 : position;
-//            notifyItemChanged(previousExpandedPosition);
-//            notifyItemChanged(position);
-
-
-
-            Intent intent = new Intent(context, DemoActivity.class);
-            intent.putExtra("LinkUrl", faqModel.getUrl());
-            context.startActivity(intent);
-
-            //https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf
+            expandedPosition = isExpanded ? -1 : position;
+            notifyItemChanged(previousExpandedPosition);
+            notifyItemChanged(position);
 
 //                boolean isExpanded = holder.tvDesc.getVisibility() == View.VISIBLE;
 //                holder.tvDesc.setVisibility(isExpanded ? View.GONE : View.VISIBLE);

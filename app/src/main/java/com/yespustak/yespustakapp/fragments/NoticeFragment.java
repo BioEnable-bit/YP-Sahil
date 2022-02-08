@@ -67,7 +67,14 @@ public class NoticeFragment extends BaseFragment {
 
 
         //Instantiating an ArrayList object
-        list.add(new NoticeModel(1,"Republic Day","123456","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
+        list.add(new NoticeModel(1,"Holi","All the students are hereby informed that on the" +
+                "occasion of Holi festival, the classes will remain" +
+                "closed from 20th March to 22nd March, 2022." +
+                "The classes will resume from 23rd March,2022" +
+                "as per the schedule","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
+        list.add(new NoticeModel(2,"Republic Day","All the students are hereby informed that on the" +
+                "occasion of Republic, the classes will remain closed on 26 Jan, 2022." +
+                "   The classes will resume from 27th Jan,2022 as per the schedule","https://dashboard.yespustak.com/uploads/publishers/books/26/619c869b29507.pdf"));
 
         llProgressView.setVisibility(View.GONE);
         rvFaq.setVisibility(View.VISIBLE);
