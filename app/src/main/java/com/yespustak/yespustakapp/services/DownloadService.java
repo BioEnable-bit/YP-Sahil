@@ -288,6 +288,7 @@ public class DownloadService extends Service implements Observer<List<DownloadBo
         Log.i(TAG, "onStartCommand: ");
         //TODO check purchased books
         downloadBookRepo.getPurchasedBooksFromApi();
+        downloadBookRepo.getNCERTDownloadedBooksFromApi();
 
         return START_STICKY;
     }

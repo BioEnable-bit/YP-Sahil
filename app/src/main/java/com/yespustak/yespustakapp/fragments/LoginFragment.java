@@ -186,7 +186,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     utils.showToast(getString(R.string.msg_something_went_wrong));
                     return;
                 }
-
                 //handle valid response
                 Integer action = null;
                 Bundle args = null;
@@ -260,7 +259,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     }
 
                 } else { //error
-
                     APIError error = Retrofit2Client.parseError(response);
                     utils.showAlert(getContext(), null, error.getMessage(), SweetAlertDialog.ERROR_TYPE, null, false);
                 }
@@ -297,8 +295,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
                 //validate and send request
                 if (validate()) {
-                    login(username, password, deviceId);
-                }
+                    login(username, password, deviceId);}
+
                 break;
             case R.id.tvSignUp:
                 getUserPref();

@@ -44,6 +44,12 @@ public class LibraryFragmentViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<Boolean> syncBooks() {
+
         return downloadBookRepo.getPurchasedBooksFromApi();
+    }
+
+    public MutableLiveData<Boolean> syncFreeBooks() {
+
+        return downloadBookRepo.getNCERTDownloadedBooksFromApi();
     }
 }

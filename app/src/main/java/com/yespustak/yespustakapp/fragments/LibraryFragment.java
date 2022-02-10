@@ -352,6 +352,10 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
             viewModel.syncBooks().observe(getViewLifecycleOwner(), isSyncing -> {
                 swipeRefreshLayout.setRefreshing(isSyncing);
             });
+
+            viewModel.syncFreeBooks().observe(getViewLifecycleOwner(), isSyncing -> {
+                swipeRefreshLayout.setRefreshing(isSyncing);
+            });
         });
 
     }
@@ -419,7 +423,7 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
                 if (response.body() != null) {
                     for (AppModel app : response.body().getThirdPartyApps()) {
                         app.setIcon(getIcon(app.getPackageName()));
-                        Log.e(TAG, "onResponse app: "+app.getPackageName() );
+                     //   Log.e(TAG, "onResponse app: "+app.getPackageName() );
 
                         appList.add(app);
                     }
@@ -457,7 +461,7 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
                 if (response.body() != null) {
                     for (ExtrasAppModel app : response.body().getThirdPartyExtraApps()) {
                         app.setIcon(getIcon(app.getPackageName()));
-                        Log.e(TAG, "onResponse: extra "+app.getPackageName() );
+                      //  Log.e(TAG, "onResponse: extra "+app.getPackageName() );
                         extrasAppList.add(app);
 
                     }
@@ -584,13 +588,13 @@ public class LibraryFragment extends BaseFragment implements AdapterItemClickLis
     public void onClick(Object object) {
         if (object instanceof AppModel) {
             AppModel app = (AppModel) object;
-            Log.e(TAG, "onClick: "+app.getPackageName());
+          //  Log.e(TAG, "onClick: "+app.getPackageName());
             openExternalApp(app.getPackageName());
         }
         else if(object instanceof ExtrasAppModel)
         {
             ExtrasAppModel app = (ExtrasAppModel) object;
-            Log.e(TAG, "onClick: "+app.getPackageName());
+         //   Log.e(TAG, "onClick: "+app.getPackageName());
             openExternalApp(app.getPackageName());
         }
 //

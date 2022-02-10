@@ -102,19 +102,7 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
         if (intent != null) {
             bookId = intent.getIntExtra("book_id", 0);
             note = intent.getStringExtra("note");
-
-
-            Log.e(TAG, "onCreate: "+bookId );
-
-            if(!note.equals("null"))
-            {
-
-            }
         }
-
-
-
-
 
         // Register the activity as a callback for contextual toolbar changes.
         // It will be called once the `TextSelectionToolbar` is going to be presented.
@@ -132,8 +120,6 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
             @Override
             public void run() {
                 try {
-//                    Log.e(TAG, "Sahil" );
-//                    Log.e(TAG, "run: "+getSelectedURL() );
                     String url = getSelectedURL();
                     url = url.replaceAll("\\s+","");
                     if(url!=null && isValidURL(url)) {
@@ -145,7 +131,7 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
                 }
                 catch (Exception e)
                 {
-                    Log.e(TAG, "run: "+e );
+                   // Log.e(TAG, "run: "+e );
                 }
 
             }
@@ -164,33 +150,7 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
     }
 
 
-//    @Override
-//    public void onResume(){
-//        super.onResume();
-//        timer.scheduleAtFixedRate(new TimerTask() {
-//            @Override
-//            public void run() {
-//                try {
-//                    Log.e(TAG, "Sahil" );
-//                    Log.e(TAG, "run: "+getSelectedURL() );
-//                    String url = getSelectedURL();
-//                    url = url.replaceAll("\\s+","");
-//                    if(url!=null && isValidURL(url)) {
-//                        Intent intent = new Intent(MyPdfActivity.this, DemoActivity.class);
-//                        intent.putExtra("LinkUrl", url);
-//                        startActivity(intent);
-//                        timer.cancel();
-//                    }
-//                }
-//                catch (Exception e)
-//                {
-//                    Log.e(TAG, "run: "+e );
-//                }
-//
-//            }
-//        }, 0, 1000);
-//
-//    }
+
     @Override
     public boolean onPageClick(@NonNull PdfDocument document, int pageIndex, @Nullable MotionEvent event, @Nullable PointF pagePosition, @Nullable Annotation clickedAnnotation) {
 //        Log.i(TAG, "onPageClick: " + clickedAnnotation.toString());
@@ -202,10 +162,6 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
 
             // Every link annotation may have an action defined.
             final Action action = linkAnnotation.getAction();
-
-
-            Log.e(TAG, "pageIndex: "+pageIndex);
-
 
             // Check if an action exists and if it is a `UriAction`.
             if (action instanceof UriAction) {
@@ -239,12 +195,7 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
 //                    intent.putExtra("LinkUrl",uriStr);
 //                    startActivity(intent);
 //                }
-                    Log.e(TAG, "onPageClick: "+uriStr );
-
-
                 } else {
-
-                    Log.e(TAG, "onPageClick: DEMO "+uriStr);
                     try {
                         Uri uri = Uri.parse(uriStr);
                         Intent intent = new Intent(MyPdfActivity.this, DemoActivity.class);
@@ -268,10 +219,7 @@ public class MyPdfActivity extends PdfActivity implements ToolbarCoordinatorLayo
     @Override
     public void onPageChanged(@NonNull PdfDocument document, int pageIndex) {
         super.onPageChanged(document, pageIndex);
-
         book_page_no = pageIndex;
-
-        Log.e(TAG, "onPageChanged: "+pageIndex );
     }
 
     private void createCmi() {

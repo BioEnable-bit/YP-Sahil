@@ -53,16 +53,19 @@ public class SharedVariables {
 //        return false;
     }
 
-    public static boolean isBookPurchased(int bookId) {
+    public static int isBookPurchased(int bookId) {
         //Sometimes its showing null and causing crash
         if (downloadBooks == null)
-            return false;
+            return 0;
 
         for (DownloadBook book : downloadBooks)
-            if (book.getRid() == bookId)
-                return true;
+            if (book.getRid() == bookId && book.getPublication().equals("NCERT"))
+                return 1;
+            else
+            if (book.getRid() == bookId && !book.getPublication().equals("NCERT"))// && book.getPublication() == "NCERT")
+                return 2;
 
-        return false;
+        return 0;
     }
 
     public static String getRazorpayCredentials() {

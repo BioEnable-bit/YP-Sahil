@@ -14,6 +14,7 @@ import com.yespustak.yespustakapp.api.response.Content;
 import com.yespustak.yespustakapp.api.response.DictionaryItem;
 import com.yespustak.yespustakapp.api.response.FavouriteBooks;
 import com.yespustak.yespustakapp.api.response.ForgotPassword;
+import com.yespustak.yespustakapp.api.response.GetNCERTDownloadedBooks;
 import com.yespustak.yespustakapp.api.response.GetPurchasedBooks;
 import com.yespustak.yespustakapp.api.response.GetSections;
 import com.yespustak.yespustakapp.api.response.GetThirdPartyApps;
@@ -295,6 +296,19 @@ public interface APIService {
     @FormUrlEncoded
     Call<GetPurchasedBooks> getPurchasedBooks(
             @Field("device_id") String deviceId
+    );
+
+    @POST("api/get/ncert/download_details")
+    @FormUrlEncoded
+    Call<GetNCERTDownloadedBooks> getNCERTDownloadedBooks(
+            @Field("device_id") String deviceId
+    );
+
+    @POST("api/save/ncert/download_details")
+    @FormUrlEncoded
+    Call<BaseResponse> saveNCERTBooks(
+            @Field("device_id") String deviceId,
+            @Field("book_id") int book_id
     );
 
     @POST("api/get/third_party/apps")

@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,7 @@ import com.yespustak.yespustakapp.adapters.HorizontalRecyclerViewAdapter;
 import com.yespustak.yespustakapp.adapters.HorizontalRecyclerViewAdapter2;
 import com.yespustak.yespustakapp.api.Retrofit2Client;
 import com.yespustak.yespustakapp.api.response.AddToCart;
+import com.yespustak.yespustakapp.api.response.BaseResponse;
 import com.yespustak.yespustakapp.api.response.BookDetail;
 import com.yespustak.yespustakapp.api.response.RecommendationList;
 import com.yespustak.yespustakapp.dao.DownloadBookDao;
@@ -41,6 +43,7 @@ import com.yespustak.yespustakapp.database.YpDatabase;
 import com.yespustak.yespustakapp.models.BookDetailModel;
 import com.yespustak.yespustakapp.models.BookModel;
 import com.yespustak.yespustakapp.models.DownloadBook;
+import com.yespustak.yespustakapp.models.UserModel;
 import com.yespustak.yespustakapp.services.DownloadService;
 import com.yespustak.yespustakapp.utils.AdapterItemClickListener;
 import com.yespustak.yespustakapp.utils.ModelSharedPref;
@@ -460,15 +463,16 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
                 tvClass.setText(Html.fromHtml(getString(R.string.text_class, bookDetailModel.getBookClass()), Html.FROM_HTML_MODE_LEGACY));
                 tvBoard.setText(Html.fromHtml(getString(R.string.text_board, bookDetailModel.getBoardName()), Html.FROM_HTML_MODE_LEGACY));
 
-                DownloadBookDao downloadBookDao;
-                YpDatabase database = YpDatabase.getInstance(getContext());
-                downloadBookDao = database.downloadBookDao();
-                boolean isDownloaded = downloadBookDao.book_exist(bookDetailModel.getTitle());
-
-                if(isDownloaded)
-                btnYpp.setText("Already downloaded");
-                else{ btnYpp.setText("Free Download");
-                btnYpp.setTypeface(btnYpp.getTypeface(), Typeface.BOLD);}
+//                DownloadBookDao downloadBookDao;
+//                YpDatabase database = YpDatabase.getInstance(getContext());
+//                downloadBookDao = database.downloadBookDao();
+//                boolean isDownloaded = downloadBookDao.book_exist(bookDetailModel.getId());
+//
+//                if(isDownloaded)
+//                btnYpp.setText("Already downloaded");
+//                else{
+                    btnYpp.setText("Free Download");
+                //btnYpp.setTypeface(btnYpp.getTypeface(), Typeface.BOLD);
                 lbvFavourite.setChecked(bookDetailModel.isFavourite());
             }
         }
@@ -477,41 +481,26 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
     }
 
     private void updateActionView() {
-//        if (status == STATUS_PURCHASED) {
-//            btnAddToCart.setVisibility(View.GONE);
-//            btnYpp.setVisibility(View.GONE);
-//            btnAlreadyPurchased.setVisibility(View.VISIBLE);
-//        }
-//        else if (status == STATUS_ADDED_IN_CART) {
-//            btnAddToCart.setEnabled(false);
-//            btnAddToCart.setText(getString(R.string.text_already_exist_in_cart));
-//        }else {
-//            btnAddToCart.setEnabled(true);
-//            btnAddToCart.setText(getString(R.string.text_add_to_cart));
-//        }
 
         existInCart = SharedVariables.isBookExistInCart(bookDetailModel.getId());
-        boolean isPurchased = SharedVariables.isBookPurchased(bookDetailModel.getId());
+        int isPurchased = SharedVariables.isBookPurchased(bookDetailModel.getId());
 
-        Log.e(TAG, "updateActionView: "+isPurchased );
-
-
-//        if(bookDetailModel.getNcrt_boook_flag()==0) {
-//            btnAlreadyPurchased.setText("Already Purchased");
-//        }else
-//        {
-//            btnAlreadyPurchased.setText("Already Downloaded");
-//        }
-
-        if (isPurchased) {
+        if (isPurchased==1)
+        {
+            btnAddToCart.setVisibility(View.GONE);
+            btnYpp.setVisibility(View.GONE);
+            btnAlreadyPurchased.setVisibility(View.VISIBLE);
+            btnAlreadyPurchased.setText("Already downloaded");
+        }
+        else if(isPurchased==2)
+        {
             btnAddToCart.setVisibility(View.GONE);
             btnYpp.setVisibility(View.GONE);
             btnAlreadyPurchased.setVisibility(View.VISIBLE);
 
-
-
-        } else {
-//            btnAddToCart.setEnabled(!existInCart);
+        }
+        else
+        {
             btnAddToCart.setText(existInCart ? getString(R.string.text_already_exist_in_cart) : getString(R.string.text_add_to_cart));
         }
 
@@ -537,30 +526,34 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
                     ((FragmentActivity) requireActivity()).startPayment((Integer.parseInt(bookDetailModel.getYpp()) * 100), bookIds);
                 }
                 else{
-                    DownloadBookDao downloadBookDao;
-                    YpDatabase database = YpDatabase.getInstance(getContext());
-                    downloadBookDao = database.downloadBookDao();
-                    boolean isDownloaded = downloadBookDao.book_exist(bookDetailModel.getTitle());
 
-                    if(isDownloaded){
-                        Toast.makeText(getContext(), "Books is already downloaded. Go to My Pustakalay for download books", Toast.LENGTH_LONG).show();
-                        SharedPref.saveBoolean(TAG, Constants.OPEN_MY_PUSTAKALAY, true);
-                        requireActivity().finish();
-                    }
-                    else {
+                    saveNCERTBooks(bookDetailModel);
 
-                        viewModel.insert(new DownloadBook(
-                                bookDetailModel.getTitle(),
-                                bookDetailModel.getPublisherName(),
-                                bookDetailModel.getBook_file(),
-                                bookDetailModel.getImageUrl1()));
-                        requireActivity().startService(new Intent(getActivity(), DownloadService.class));
+//                    DownloadBookDao downloadBookDao;
+//                    YpDatabase database = YpDatabase.getInstance(getContext());
+//                    downloadBookDao = database.downloadBookDao();
+//                    boolean isDownloaded = downloadBookDao.book_exist(bookDetailModel.getTitle());
+//
+//                    if(isDownloaded){
+//                        Toast.makeText(getContext(), "Books is already downloaded. Go to My Pustakalay for download books", Toast.LENGTH_LONG).show();
+//                        SharedPref.saveBoolean(TAG, Constants.OPEN_MY_PUSTAKALAY, true);
+//                        requireActivity().finish();
+//                    }
+//                    else {
+//
+//                        viewModel.insert(new DownloadBook(
+//                                bookDetailModel.getTitle(),
+//                                bookDetailModel.getPublisherName(),
+//                                bookDetailModel.getBook_file(),
+//                                bookDetailModel.getImageUrl1()));
+//                        requireActivity().startService(new Intent(getActivity(), DownloadService.class));
+//
+//
+//                        SharedPref.saveBoolean(TAG, Constants.OPEN_MY_PUSTAKALAY, true);
+//                        requireActivity().finish();
+//                        Toast.makeText(getContext(), "Books download has been started. Go to My Pustakalay for download status", Toast.LENGTH_LONG).show();
+//                    }
 
-
-                        SharedPref.saveBoolean(TAG, Constants.OPEN_MY_PUSTAKALAY, true);
-                        requireActivity().finish();
-                        Toast.makeText(getContext(), "Books download has been started. Go to My Pustakalay for download status", Toast.LENGTH_LONG).show();
-                    }
                 }
 
                 break;
@@ -582,6 +575,41 @@ public class BookDetailFragment extends BaseFragment implements View.OnClickList
                 break;
         }
     }
+
+    public MutableLiveData<BaseResponse> saveNCERTBooks(BookDetailModel bookDetailModel) {
+        MutableLiveData<BaseResponse> saveUserResponse = new MutableLiveData<>();
+        Call<BaseResponse> call = Retrofit2Client.getInstance().getApiService().saveNCERTBooks(utils.getIMEINumber(),
+                bookDetailModel.getId()
+        );
+        call.enqueue(new Callback<BaseResponse>() {
+            @Override
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
+                if (!response.isSuccessful() || response.body() == null) {
+                    Log.e(TAG, "saveUserProfile onResponse: " + response.raw().toString());
+                    saveUserResponse.setValue(null);
+                    return;
+                }
+                saveUserResponse.setValue(response.body());
+
+
+                requireActivity().startService(new Intent(getActivity(), DownloadService.class));
+                SharedPref.saveBoolean(TAG, Constants.OPEN_MY_PUSTAKALAY, true);
+                requireActivity().finish();
+
+                Toast.makeText(getContext(), "Books download has been started. Go to My Pustakalay for download status", Toast.LENGTH_LONG).show();
+
+            }
+
+            @Override
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
+                Log.e(TAG, "onFailure: ", t);
+                saveUserResponse.setValue(null);
+            }
+        });
+
+        return saveUserResponse;
+    }
+
 
     @Override
     public void onClick(Object object) {

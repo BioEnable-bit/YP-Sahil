@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.yespustak.yespustakapp.api.Retrofit2Client;
+import com.yespustak.yespustakapp.api.response.GetNCERTDownloadedBooks;
 import com.yespustak.yespustakapp.api.response.GetPurchasedBooks;
 import com.yespustak.yespustakapp.dao.DownloadBookDao;
 import com.yespustak.yespustakapp.database.YpDatabase;
@@ -54,6 +55,14 @@ public class DownloadBookRepo {
 
     public void delete(DownloadBook downloadBook) {
         downloadBookDao.delete(downloadBook);
+    }
+
+    public void deleteNonNCERT(DownloadBook downloadBook) {
+        downloadBookDao.deleteNonNCERT();
+    }
+
+    public void deleteNCERT(DownloadBook downloadBook) {
+        downloadBookDao.deleteNCERT();
     }
 
     public void deleteAll() {
@@ -111,10 +120,10 @@ public class DownloadBookRepo {
 
                     insertedList.add(book.getRid());
                 }
-//
+
 //                for (Map.Entry<Integer, DownloadBook> entry : getBooksMap().entrySet()) {
 //                    if (!insertedList.contains(entry.getValue().getRid()))
-//                        delete(entry.getValue());
+//                        deleteNonNCERT(entry.getValue());
 //                }
 
                 //this is used to show/hide progress bar
@@ -130,4 +139,53 @@ public class DownloadBookRepo {
 
         return isSyncing;
     }
+
+    public MutableLiveData<Boolean> getNCERTDownloadedBooksFromApi() {
+        //must run this in background thread
+        isSyncing.setValue(true);
+        Call<GetNCERTDownloadedBooks> call = Retrofit2Client.getInstance().getApiService().getNCERTDownloadedBooks(utils.getIMEINumber());
+        Log.e("CallAPI",""+call);
+        call.enqueue(new Callback<GetNCERTDownloadedBooks>() {
+            @Override
+            public void onResponse(Call<GetNCERTDownloadedBooks> call, Response<GetNCERTDownloadedBooks> response) {
+                if (!response.isSuccessful() || response.body().getNCERTDownloadedBooks() == null)
+                    return;
+
+
+                Log.e(TAG, "onResponse: "+response.body().getNCERTDownloadedBooks());
+
+
+                List<DownloadBook> remoteDownloadBooks = response.body().getNCERTDownloadedBooks();
+                List<Integer> insertedList = new ArrayList<>();
+                HashMap<Integer, DownloadBook> booksMap = getBooksMap();
+
+
+                for (DownloadBook book : remoteDownloadBooks) {
+                    if (booksMap.containsKey(book.getRid()))
+                        updateViaRemoteBook(book);
+                    else
+                        insert(book);
+
+                    insertedList.add(book.getRid());
+                }
+//
+//                for (Map.Entry<Integer, DownloadBook> entry : getBooksMap().entrySet()) {
+//                    if (!insertedList.contains(entry.getValue().getRid()))
+//                        deleteNCERT(entry.getValue());
+//                }
+
+                //this is used to show/hide progress bar
+                isSyncing.setValue(false);
+            }
+
+            @Override
+            public void onFailure(Call<GetNCERTDownloadedBooks> call, Throwable t) {
+                Log.e(TAG, "onFailure: fail to fetch purchased books ", t);
+                isSyncing.setValue(false);
+            }
+        });
+
+        return isSyncing;
+    }
+
 }

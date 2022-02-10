@@ -24,6 +24,13 @@ public interface DownloadBookDao {
     @Delete
     void delete(DownloadBook downloadBook);
 
+    @Query("DELETE  FROM DOWNLOAD_BOOKS where publication != 'NCERT'")
+    void deleteNonNCERT();
+
+    @Query("DELETE  FROM DOWNLOAD_BOOKS where publication= 'NCERT'")
+    void deleteNCERT();
+
+
     @Query("DELETE FROM DOWNLOAD_BOOKS")
     void deleteAll();
 
@@ -39,8 +46,8 @@ public interface DownloadBookDao {
     @Query("select * from download_books where rid= :id")
     DownloadBook getBook(int id);
 
-    @Query("select exists (select * from download_books where title = :name)")
-    boolean book_exist(String name);
+    @Query("select exists (select * from download_books where publication = 'NCERT' AND rid = :id)")
+    boolean book_exist(int id);
 
 //    @Query("DELETE FROM DOWNLOAD_BOOKS WHERE id in (:idList)")
 //    void deleteBatch(List<Integer> idList);
